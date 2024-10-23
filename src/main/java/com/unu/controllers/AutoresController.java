@@ -15,11 +15,10 @@ import com.unu.model.AutoresModel;
 public class AutoresController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	AutoresModel modelo = new AutoresModel();
+	private AutoresModel modelo = new AutoresModel();
 
 	public AutoresController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -38,24 +37,34 @@ public class AutoresController extends HttpServlet {
 				listar(request, response);
 				break;
 			case "nuevo":
-				listar(request, response);
+				// crear nuevoAutor.jsp
+//				request.getRequestDispatcher("/autores/nuevoAutor.jsp").forward(request, response);
 				break;
+			case "insertar":
+//				 insertar(request, response);
+
 			}
 		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		processRequest(request, response);
+		try {
+			processRequest(request, response);
+		} catch (Exception e) {
+			System.out.println("Error en goGet " + e.getMessage());
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 //		doGet(request, response);
-		processRequest(request, response);
+		try {
+			processRequest(request, response);
+		} catch (Exception e) {
+			System.out.println("Error en goGet " + e.getMessage());
+		}
 	}
 
 	protected void listar(HttpServletRequest request, HttpServletResponse response) {
