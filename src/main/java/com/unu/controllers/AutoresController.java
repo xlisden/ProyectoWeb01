@@ -25,20 +25,19 @@ public class AutoresController extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		try (PrintWriter out = response.getWriter()) {
-			if (request.getParameter("opcion") == null) {
+			if (request.getParameter("op") == null) {
 				listar(request, response);
 				return;
 			}
 
-			String operacion = request.getParameter("opcion");
+			String operacion = request.getParameter("op");
 
 			switch (operacion) {
 			case "listar":
 				listar(request, response);
 				break;
 			case "nuevo":
-				// crear nuevoAutor.jsp
-//				request.getRequestDispatcher("/autores/nuevoAutor.jsp").forward(request, response);
+				request.getRequestDispatcher("/autores/nuevoAutor.jsp").forward(request, response);
 				break;
 			case "insertar":
 //				 insertar(request, response);
