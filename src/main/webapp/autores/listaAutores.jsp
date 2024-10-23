@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<table id="tabla">
+<table id="tabla" class="table table-bordered">
   <thead>
   	<tr>
   		<th> Id del autor </th>
@@ -27,9 +27,9 @@
   			for(Autor autor: listaAutores){
   	%>
   				<tr>
-  					<td><%= autor.getIdAutor() %></td>
-  					<td><%= autor.getNombre() %></td>
-  					<td><%= autor.getNacionalidad() %></td>
+  					<td class="border-primary"><%= autor.getIdAutor() %></td>
+  					<td class="border-danger"><%= autor.getNombre() %></td>
+  					<td class="border-success"><%= autor.getNacionalidad() %></td>
   					<td></td>
   				</tr>
 	<%				
