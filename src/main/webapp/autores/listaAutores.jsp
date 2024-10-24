@@ -8,8 +8,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Listar autor</title>
 
+<br>
+<%
+	String url = "http://localhost:8080/ProyectoWeb01/";
+%>
+<a href="<%=url%>AutoresController?op=nuevo" type="button"
+	class="btn btn-outline-primary"> Nuevo Autor </a>
+<br> <br>
 
 <table id="tabla" class="table table-bordered">
 	<thead>
@@ -28,10 +35,15 @@
 			for (Autor autor : listaAutores) {
 		%>
 		<tr>
-			<td class="border-primary"><%=autor.getIdAutor()%></td>
-			<td class="border-danger"><%=autor.getNombre()%></td>
-			<td class="border-success"><%=autor.getNacionalidad()%></td>
-			<td></td>
+			<td><%=autor.getIdAutor()%></td>
+			<td><%=autor.getNombre()%></td>
+			<td><%=autor.getNacionalidad()%></td>
+			<td>
+				<a href="<%=url%>AutoresController?op=obtener&idautor=<%=autor.getIdAutor()%>"
+				type="button" class="btn btn-outline-warning">Editar</a> 
+				<a href="<%=url%>AutoresController?op=eliminar&idautor=<%=autor.getIdAutor()%>"
+				type="button" class="btn btn-outline-danger">Eliminar</a>
+			</td>
 		</tr>
 		<%
 		}
@@ -57,12 +69,7 @@
 </head>
 <body>
 
-	<br>
-	<%
-	String url = "http://localhost:8080/ProyectoWeb01/";
-	%>
-	<a href="<%=url%>AutoresController?op=nuevo" type="button"
-		class="btn btn-outline-primary"> Nuevo Autor </a>
+
 
 
 

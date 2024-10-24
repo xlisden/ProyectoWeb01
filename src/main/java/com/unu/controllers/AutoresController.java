@@ -12,6 +12,7 @@ import java.util.Iterator;
 import com.unu.beans.Autor;
 import com.unu.model.AutoresModel;
 
+@WebServlet(name = "AutoresController", urlPatterns = { "/AutoresController" })
 public class AutoresController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +32,6 @@ public class AutoresController extends HttpServlet {
 			}
 
 			String operacion = request.getParameter("op");
-
 			switch (operacion) {
 			case "listar":
 				listar(request, response);
@@ -40,7 +40,16 @@ public class AutoresController extends HttpServlet {
 				request.getRequestDispatcher("/autores/nuevoAutor.jsp").forward(request, response);
 				break;
 			case "insertar":
-//				 insertar(request, response);
+				insertar(request, response);
+			case "obtener":
+				obtener(request, response);
+				break;
+			case "modificar":
+				modificar(request, response);
+				break;
+			case "eliminar":
+				eliminar(request, response);
+				break;
 
 			}
 		}
@@ -52,7 +61,7 @@ public class AutoresController extends HttpServlet {
 		try {
 			processRequest(request, response);
 		} catch (Exception e) {
-			System.out.println("Error en goGet " + e.getMessage());
+			System.out.println("Error en doGet " + e.getMessage());
 		}
 	}
 
@@ -62,11 +71,11 @@ public class AutoresController extends HttpServlet {
 		try {
 			processRequest(request, response);
 		} catch (Exception e) {
-			System.out.println("Error en goGet " + e.getMessage());
+			System.out.println("Error en doPost " + e.getMessage());
 		}
 	}
 
-	protected void listar(HttpServletRequest request, HttpServletResponse response) {
+	private void listar(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			request.setAttribute("listaAutores", modelo.listarAutores());
 
@@ -80,8 +89,76 @@ public class AutoresController extends HttpServlet {
 
 			request.getRequestDispatcher("/autores/listaAutores.jsp").forward(request, response);
 		} catch (Exception e) {
-			System.out.println("Ocurren problemas en listar() en AutoresController");
+			System.out.println("Ocurren problemas en listar() en AutoresController " + e.getMessage());
 		}
 	}
 
+	private void insertar(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			Autor autor = new Autor();
+			autor.setNombre(request.getParameter("nombre"));
+			autor.setNacionalidad(request.getParameter("nacionalidad"));
+
+			if (modelo.insertarAutor(autor) > 0) {
+				request.getSession().setAttribute("exito", "Autor creado exitosamente");
+			} else {
+				request.getSession().setAttribute("fracaso", "El autor no se ha creado");
+			}
+			response.sendRedirect(request.getContextPath() + "/AutoresController?op=listar");
+		} catch (Exception e) {
+			System.out.println("Ocurren problemas en insertar() en AutoresController" + e.getMessage());
+		}
+	}
+
+	private void obtener(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			int idautor = Integer.parseInt(request.getParameter("idautor"));
+			Autor autor = modelo.obtenerAutor(idautor);
+			System.out.println("Autor en obtener: " + autor.getIdAutor() + " " + autor.getNombre());
+			
+			if (autor != null) {
+				request.setAttribute("autor", autor);
+				request.getRequestDispatcher("/autores/editarAutor.jsp").forward(request, response);
+			} else {
+				response.sendRedirect(request.getContextPath() + "/error404.jsp");
+			}
+
+		} catch (Exception e) {
+			System.out.println("Ocurren problemas en obtener() en AutoresController" + e.getMessage());
+		}
+	}
+
+	private void modificar(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			Autor autor = new Autor();
+			autor.setIdAutor(Integer.parseInt(request.getParameter("idautor")));
+			autor.setNombre(request.getParameter("nombre"));
+			autor.setNacionalidad(request.getParameter("nacionalidad"));
+			request.setAttribute("autor", autor);
+
+			if (modelo.modificarAutor(autor) > 0) {
+				request.getSession().setAttribute("exito", "Autor modificado exitosamente");
+			} else {
+				request.getSession().setAttribute("fracaso", "El autor no se ha modificado");
+			}
+			response.sendRedirect(request.getContextPath() + "/AutoresController?op=listar");
+		} catch (Exception e) {
+			System.out.println("Ocurren problemas en modificar() en AutoresController" + e.getMessage());
+		}
+	}
+
+	private void eliminar(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			int idautor = Integer.parseInt(request.getParameter("idautor"));
+
+			if (modelo.eliminarAutor(idautor) > 0) {
+				request.getSession().setAttribute("exito", "Autor eliminado exitosamente");
+			} else {
+				request.getSession().setAttribute("fracaso", "El autor no se ha eliminado");
+			}
+			request.getRequestDispatcher("/AutoresController?op=listar").forward(request, response);
+		} catch (Exception e) {
+			System.out.println("Ocurren problemas en eliminar() en AutoresController" + e.getMessage());
+		}
+	}
 }

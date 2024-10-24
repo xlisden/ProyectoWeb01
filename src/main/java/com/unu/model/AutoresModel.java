@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class AutoresModel {
 	private CallableStatement cs;
 	private Connection conexion;
 	private ResultSet rs;
+	private Statement st;
 
 //	public List<Autor> listarAutores() {
 //		ArrayList<Autor> autores = new ArrayList<>();
@@ -27,7 +29,7 @@ public class AutoresModel {
 		try {
 			List<Autor> lista = new ArrayList<>();
 			String sql = "CALL spListarAutores()";
-			
+
 			conexion = Conexion.abrirConexion();
 			cs = conexion.prepareCall(sql);
 			rs = cs.executeQuery();
@@ -38,7 +40,7 @@ public class AutoresModel {
 				autor.setNacionalidad(rs.getString("nacionalidad"));
 				lista.add(autor);
 			}
-			
+
 			conexion = Conexion.cerrarConexion();
 			return lista;
 		} catch (SQLException ex) {
@@ -48,24 +50,114 @@ public class AutoresModel {
 		}
 	}
 
-	public void insertarAutores(String nombre, String nacionalidad) {
+	public int insertarAutor(Autor autor) {
+		int filasAfectadas = 0;
 		try {
-			String sql = "CALL spInsertarAutores(?, ?)";
-			
+			String sql = "CALL spInsertarAutor(?, ?)";
+
 			conexion = Conexion.abrirConexion();
 			cs = conexion.prepareCall(sql);
-			cs.setNString(1, nombre);
-			cs.setNString(2, nacionalidad);
-			int rs = cs.executeUpdate();
-			if (rs != 0) {
-				System.out.println("Insertado correctamente el autor " + nombre + nacionalidad);
+			cs.setString(1, autor.getNombre());
+			cs.setString(2, autor.getNacionalidad());
+			filasAfectadas = cs.executeUpdate();
+			if (filasAfectadas != 0) {
+				System.out.println("Insertado correctamente el autor " + autor.getNombre() + autor.getNacionalidad());
 			}
-			
+
 			conexion = Conexion.cerrarConexion();
 		} catch (SQLException ex) {
 			System.out.println("Error en insertarAutores() " + ex.getMessage());
 			conexion = Conexion.cerrarConexion();
 		}
+		return filasAfectadas;
+	}
+
+	public int eliminarAutor(int idAutor) {
+		int filasAfectadas = 0;
+		try {
+			String sql = "CALL spEliminarAutor(?)";
+
+			conexion = Conexion.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			cs.setInt(1, idAutor);
+			filasAfectadas = cs.executeUpdate();
+			if (filasAfectadas != 0) {
+				System.out.println("Autor eliminado correctamente.");
+			}
+
+			conexion = Conexion.cerrarConexion();
+		} catch (SQLException ex) {
+			System.out.println("Error en eliminarAutor() " + ex.getMessage());
+			conexion = Conexion.cerrarConexion();
+		}
+		return filasAfectadas;
+	}
+
+	public int modificarAutor(Autor autor) {
+		int filasAfectadas = 0;
+		try {
+			String sql = "CALL spModificarAutor(?, ?, ?)";
+
+			conexion = Conexion.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			cs.setInt(1, autor.getIdAutor());
+			cs.setString(2, autor.getNombre());
+			cs.setString(3, autor.getNacionalidad());
+			filasAfectadas = cs.executeUpdate();
+			if (filasAfectadas != 0) {
+				System.out.println("Autor modificado correctamente.");
+			}
+			conexion = Conexion.cerrarConexion();
+		} catch (SQLException ex) {
+			System.out.println("Error en eliminarAutor() " + ex.getMessage());
+			conexion = Conexion.cerrarConexion();
+		}
+		return filasAfectadas;
+	}
+
+	public Autor obtenerAutor(int idAutor) throws SQLException {
+		try {
+			String sql = "CALL spObtenerAutor(?)";
+
+			conexion = Conexion.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			cs.setInt(1, idAutor);
+			rs = cs.executeQuery();
+
+			if (rs.next()) {
+				Autor autor = new Autor();
+				autor.setIdAutor(rs.getInt("idautor"));
+				autor.setNombre(rs.getString("nombre"));
+				autor.setNacionalidad(rs.getString("nacionalidad"));
+				return autor;
+			}
+
+			conexion = Conexion.cerrarConexion();
+			return null;
+		} catch (SQLException ex) {
+			System.out.println("Error en obtenerAutor() " + ex.getMessage());
+			conexion = Conexion.cerrarConexion();
+			return null;
+		}
+	}
+
+	public int totalAutores() throws SQLException {
+		int totalAutores = 0;
+		try {
+			String sql = "SELECT COUNT(idautor) as totalAutores FROM autor";
+
+			conexion = Conexion.abrirConexion();
+			st = conexion.prepareStatement(sql);
+			rs = st.getResultSet();
+			while (rs.next()) {
+				totalAutores = rs.getInt("totalAutores");
+			}
+		} catch (SQLException ex) {
+			System.out.println("Error en totalAutores() " + ex.getMessage());
+		} finally {
+			conexion = Conexion.cerrarConexion();
+		}
+		return totalAutores;
 	}
 
 }
