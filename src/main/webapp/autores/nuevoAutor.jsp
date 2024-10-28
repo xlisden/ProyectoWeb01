@@ -18,8 +18,8 @@
 	<% String url = "http://localhost:8080/ProyectoWeb01/"; %>
 	<form role="form" action="<%=url %>AutoresController" method="POST">
 		<input type="hidden" name="op" value="insertar">
-		<input type="text" name="nombre" id="nombre" placeholder="Nombre del autor">
-		<input type="text" name="nacionalidad" id="nacionalidad" placeholder="Nacionalidad del autor">
+		<input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre del autor" >
+		<input type="text" class="form-control" name="nacionalidad" id="nacionalidad" placeholder="Nacionalidad del autor" >
 		<br><p>   </p>
 		<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
 		<a href="<%=url%>AutoresController?op=listar" type="button"
