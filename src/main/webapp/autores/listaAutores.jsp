@@ -15,7 +15,7 @@
 	String url = "http://localhost:8080/ProyectoWeb01/";
 %>
 <a href="<%=url%>AutoresController?op=nuevo" type="button"
-	class="btn btn-outline-primary"> Nuevo Autor </a>
+	class="btn btn-primary"> Nuevo Autor </a>
 <br> <br>
 
 <table id="tabla" class="table table-bordered">

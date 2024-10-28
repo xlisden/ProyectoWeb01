@@ -79,8 +79,6 @@ public class AutoresController extends HttpServlet {
 		try {
 			request.setAttribute("listaAutores", modelo.listarAutores());
 
-			System.out.println("Número de autores: " + modelo.listarAutores().size());
-
 			Iterator<Autor> it = modelo.listarAutores().iterator();
 			while (it.hasNext()) {
 				Autor autor = it.next();

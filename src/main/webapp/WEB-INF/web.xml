@@ -19,4 +19,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>EditorialesController</display-name>
+    <servlet-name>EditorialesController</servlet-name>
+    <servlet-class>com.unu.controllers.EditorialesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditorialesController</servlet-name>
+    <url-pattern>/EditorialesController</url-pattern>
+  </servlet-mapping>
 </web-app>
