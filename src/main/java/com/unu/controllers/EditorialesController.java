@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 
 import com.unu.beans.Autor;
+import com.unu.beans.Editorial;
 import com.unu.model.EditorialesModel;
 
 
@@ -74,11 +75,11 @@ public class EditorialesController extends HttpServlet {
 		try {
 			request.setAttribute("listaEditoriales", modelo.listarEditoriales());
 			
-//			Iterator<Autor> it = modelo.listarAutores().iterator();
-//			while (it.hasNext()) {
-//				Autor autor = it.next();
-//				System.out.println(autor.getNombre() + " " + autor.getNacionalidad());
-//			}
+			Iterator<Editorial> it = modelo.listarEditoriales().iterator();
+			while (it.hasNext()) {
+				Editorial editorial = it.next();
+				System.out.println("listarController(): " + editorial.getNombre() + " " + editorial.getContacto() + " " + editorial.getTelefono());
+			}
 			
 			request.getRequestDispatcher("/editoriales/listaEditoriales.jsp").forward(request, response);
 		} catch (Exception e) {
