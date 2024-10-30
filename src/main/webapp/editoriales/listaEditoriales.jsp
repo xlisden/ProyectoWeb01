@@ -8,9 +8,18 @@
 
 <meta charset="UTF-8">
 <title>Listar editoriales</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<br>
+<%
+	String url = "http://localhost:8080/ProyectoWeb01/";
+%>
+
+<div class="container">
 
 
+<a href="<%=url%>EditorialesController?op=nuevo" type="button"
+	class="btn btn-primary"> Nueva Editorial </a>
+<br> <br>
+ 
 <table id="tabla" class="table table-bordered">
 	<thead>
 		<tr>
@@ -33,6 +42,12 @@
 			<td><%=editorial.getNombre()%></td>
 			<td><%=editorial.getContacto()%></td>
 			<td><%=editorial.getTelefono()%></td>
+			<td>
+				<a href="<%=url%>EditorialesController?op=obtener&ideditorial=<%=editorial.getIdeditorial()%>"
+				type="button" class="btn btn-outline-warning">Editar</a> 
+				<a href="<%=url%>EditorialesController?op=eliminar&ideditorial=<%=editorial.getIdeditorial()%>"
+				type="button" class="btn btn-outline-danger">Eliminar</a>
+			</td>
 		</tr>
 		<%
 		}
@@ -51,6 +66,18 @@
 	</tbody>
 </table>
 
+</div>
+
+
+<link rel="stylesheet"
+		href="assets/css/bootstrap.min.css">
+<script src="assets/js/bootstrap.min/js"></script>
+<!--  <link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+ -->
 
 </head>
 <body>

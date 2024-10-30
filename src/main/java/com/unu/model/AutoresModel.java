@@ -116,29 +116,26 @@ public class AutoresModel {
 	}
 
 	public Autor obtenerAutor(int idAutor) throws SQLException {
+		Autor autor = null;
 		try {
 			String sql = "CALL spObtenerAutor(?)";
-
 			conexion = Conexion.abrirConexion();
 			cs = conexion.prepareCall(sql);
 			cs.setInt(1, idAutor);
 			rs = cs.executeQuery();
 
 			if (rs.next()) {
-				Autor autor = new Autor();
+				autor = new Autor();
 				autor.setIdAutor(rs.getInt("idautor"));
 				autor.setNombre(rs.getString("nombre"));
 				autor.setNacionalidad(rs.getString("nacionalidad"));
 				return autor;
 			}
-
-			conexion = Conexion.cerrarConexion();
-			return null;
 		} catch (SQLException ex) {
 			System.out.println("Error en obtenerAutor() " + ex.getMessage());
-			conexion = Conexion.cerrarConexion();
-			return null;
 		}
+		conexion = Conexion.cerrarConexion();
+		return autor;
 	}
 
 	public int totalAutores() throws SQLException {

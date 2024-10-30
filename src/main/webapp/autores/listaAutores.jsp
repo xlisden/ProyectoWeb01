@@ -10,10 +10,37 @@
 <meta charset="UTF-8">
 <title>Listar autor</title>
 
+<link rel="stylesheet"
+		href="assets/css/bootstrap.min.css">
+<script src="assets/js/bootstrap.min/js"></script>
+
+<!--  <link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+ -->
+ 
+<script>
+	function eliminar(id) {
+		if(confirm("¿Desea eliminar el registro?") == true){
+			location.href = "AutoresController?op=eliminar&idautor=" + id;
+		}
+	}
+</script>
+ 
+</head>
+<body>
+
+
+
 <br>
 <%
 	String url = "http://localhost:8080/ProyectoWeb01/";
 %>
+
+<div class="container">
+
 <a href="<%=url%>AutoresController?op=nuevo" type="button"
 	class="btn btn-primary"> Nuevo Autor </a>
 <br> <br>
@@ -41,8 +68,12 @@
 			<td>
 				<a href="<%=url%>AutoresController?op=obtener&idautor=<%=autor.getIdAutor()%>"
 				type="button" class="btn btn-outline-warning">Editar</a> 
+				<!--
 				<a href="<%=url%>AutoresController?op=eliminar&idautor=<%=autor.getIdAutor()%>"
-				type="button" class="btn btn-outline-danger">Eliminar</a>
+				type="button" class="btn btn-outline-danger">Eliminar</a> 
+				 -->
+				<a href="javascript:eliminar(<%=autor.getIdAutor()%>)" type="button" 
+				class="btn btn-outline-danger">Eliminar</a>
 			</td>
 		</tr>
 		<%
@@ -60,17 +91,7 @@
 		%>
 	</tbody>
 </table>
-
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-	crossorigin="anonymous">
-</head>
-<body>
-
-
-
+</div>
 
 
 </body>

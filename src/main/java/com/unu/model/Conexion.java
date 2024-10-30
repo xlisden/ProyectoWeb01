@@ -15,6 +15,7 @@ public class Conexion {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conexion = DriverManager.getConnection(url, user, password);
+			System.out.println("Conexión abierta.");
 		} catch (Exception e) {
 			System.out.println("Error al abrir conexión: " + e.getMessage());
 		}

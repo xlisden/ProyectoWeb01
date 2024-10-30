@@ -82,7 +82,6 @@ public class AutoresController extends HttpServlet {
 			Iterator<Autor> it = modelo.listarAutores().iterator();
 			while (it.hasNext()) {
 				Autor autor = it.next();
-				System.out.println(autor.getNombre() + " " + autor.getNacionalidad());
 			}
 
 			request.getRequestDispatcher("/autores/listaAutores.jsp").forward(request, response);
@@ -156,7 +155,7 @@ public class AutoresController extends HttpServlet {
 			}
 			request.getRequestDispatcher("/AutoresController?op=listar").forward(request, response);
 		} catch (Exception e) {
-			System.out.println("Ocurren problemas en eliminar() en AutoresController" + e.getMessage());
+			System.out.println("Ocurren problemas en eliminar() en AutoresController " + e.getMessage());
 		}
 	}
 }
