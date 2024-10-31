@@ -37,12 +37,13 @@
 	
 	<div class="form-group">
 	<form role="form" action="<%=url %>EditorialesController" method="POST">
+		<br>
 		<input type="hidden" name="op" value="modificar">
 		<input type="hidden" name="ideditorial" value="<%=editorial.getIdeditorial()%>" >
 		
 		<input type="text" name="nombre" id="nombre" value="<%=editorial.getNombre()%>" class="form-control">
 		<input type="email" name="contacto" id="contacto" value="<%=editorial.getContacto()%>" class="form-control">
-		<input type="text" name="telefono" id="telefono" value="<%=editorial.getTelefono()%>" class="form-control">
+		<input type="number" name="telefono" id="telefono" value="<%=editorial.getTelefono()%>" class="form-control">
 		<br>
 		<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
 		<a href="<%=url%>EditorialesController?op=listar" type="button"

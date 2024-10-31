@@ -139,6 +139,5 @@ public class EditorialesModel {
 		conexion = Conexion.cerrarConexion();
 		return filasAfectadas;
 	}
-
 	
 }

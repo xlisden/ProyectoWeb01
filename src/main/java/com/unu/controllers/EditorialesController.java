@@ -35,24 +35,23 @@ public class EditorialesController extends HttpServlet {
 
 			String operacion = request.getParameter("op");
 			switch (operacion) {
-			case "listar":
-				listar(request, response);
-				break;
-			case "nuevo":
-				request.getRequestDispatcher("/editoriales/nuevaEditorial.jsp").forward(request, response);
-				break;
-			case "insertar":
-				insertar(request, response);
-			case "obtener":
-				obtener(request, response);
-				break;
-			case "modificar":
-				modificar(request, response);
-				break;
-			case "eliminar":
-//				eliminar(request, response);
-				break;
-
+				case "listar":
+					listar(request, response);
+					break;
+				case "nuevo":
+					request.getRequestDispatcher("/editoriales/nuevaEditorial.jsp").forward(request, response);
+					break;
+				case "insertar":
+					insertar(request, response);
+				case "obtener":
+					obtener(request, response);
+					break;
+				case "modificar":
+					modificar(request, response);
+					break;
+				case "eliminar":
+					eliminar(request, response);
+					break;
 			}
 		} catch (Exception e) {
 			System.out.println("Error en processRequest() " + e.getMessage());

@@ -28,7 +28,7 @@
 		<input type="hidden" name="op" value="insertar">
 		<input type="text" name="nombre" id="nombre" placeholder="Nombre de la editorial" class="form-control">
 		<input type="email"name="contacto" id="contacto" placeholder="Contacto de la editorial" class="form-control">
-		<input type="text" name="telefono" id="telefono" placeholder="Telefono de la editorial" class="form-control">
+		<input type="number" name="telefono" id="telefono" placeholder="Telefono de la editorial" class="form-control">
 		<br>
 		<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
 		<a href="<%=url%>EditorialesController?op=listar" type="button"
