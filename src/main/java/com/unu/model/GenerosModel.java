@@ -3,6 +3,7 @@ package com.unu.model;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class GenerosModel {
 	private CallableStatement cs;
 	private Connection conexion;
 	private ResultSet rs;
+	private Statement st;
 	
 	public List<Genero> listarGeneros(){
 		List<Genero> listaGeneros = null;
@@ -59,6 +61,26 @@ public class GenerosModel {
 			System.out.println("Error en obtenerGenero() " + e.getMessage());
 		}
 		return genero;
+	}
+	
+	public List<String> listarNombresGeneros(){
+		List<String> generos = new ArrayList<>();
+		try {
+			String sql = "SELECT g.nombre FROM genero g;";
+			conexion = Conexion.abrirConexion();
+			st = conexion.createStatement();
+			rs = st.executeQuery(sql);
+			
+			while(rs.next()) {
+				generos.add(rs.getString(1));
+				System.out.println(rs.getString(1));
+			}
+			
+			conexion = Conexion.cerrarConexion();
+		} catch (Exception e) {
+			System.out.println("Error en listarNombresGeneros() " + e.getMessage());
+		}
+		return generos;
 	}
 	
 }

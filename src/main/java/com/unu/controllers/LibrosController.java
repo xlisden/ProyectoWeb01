@@ -8,54 +8,48 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
+import java.util.List;
 
-import com.unu.beans.Genero;
 import com.unu.model.GenerosModel;
 
-@WebServlet(name = "GenerosController", urlPatterns = { "/GenerosController" })
-public class GenerosController extends HttpServlet {
+@WebServlet(name = "LibrosController", urlPatterns = { "/LibrosController" })
+public class LibrosController extends HttpServlet {
+	
+	GenerosModel generosModel = new GenerosModel();
 	
 	private static final long serialVersionUID = 1L;
-	private GenerosModel modelo = new GenerosModel();
-	
-    public GenerosController() {
+    public LibrosController() {
     	super();
     }
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 		
 		try(PrintWriter out = response.getWriter()) {
 			if(request.getParameter("op") == null) {
-//				listar(request, response);
+				listarGeneros(request, response);
 			}
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("Error en processRequest() " + e.getMessage());
 		}
     }
-    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		processRequest(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		processRequest(request, response);
 	}
 	
-	protected void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void listarGeneros(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			request.setAttribute("listaGeneros", modelo.listarGeneros());
+			request.setAttribute("nombresGeneros", generosModel.listarNombresGeneros());
 			
-			Iterator<Genero> it = modelo.listarGeneros().iterator();
-			while(it.hasNext()) {
-				Genero genero = it.next();
-			}
-			
-			request.getRequestDispatcher("/generos/ListaGeneros.jsp").forward(request, response);
+			request.getRequestDispatcher("/libros/nuevoLibro.jsp").forward(request, response);
 		} catch (Exception e) {
-			System.out.println("Error en listar() en GenerosController: " + e.getMessage());
+			System.out.println("Error en listarGeneros() " + e.getMessage());
 		}
 	}
 

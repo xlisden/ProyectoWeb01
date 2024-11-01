@@ -1,5 +1,3 @@
-USE bibliotecapoo2;
-
 -- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: bibliotecapoo2
@@ -29,7 +27,7 @@ CREATE TABLE `autor` (
   `nombre` varchar(50) DEFAULT NULL,
   `nacionalidad` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idautor`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +36,7 @@ CREATE TABLE `autor` (
 
 LOCK TABLES `autor` WRITE;
 /*!40000 ALTER TABLE `autor` DISABLE KEYS */;
-INSERT INTO `autor` VALUES (1,'Juanita Alcachofa','peruano'),(2,'Garcia Marquez','Argentina'),(3,'Borges','Argentina'),(4,'Allende','Chilena'),(5,'Anita','Peruana'),(12,'autor1222','autor2');
+INSERT INTO `autor` VALUES (1,'Juanita Alcachofa','peruano'),(2,'Garcia Marquez','Argentina'),(3,'Borges','Argentina'),(4,'Allende','Chilena'),(5,'Anita','Peruana'),(13,'Joyo Mayes','Británica');
 /*!40000 ALTER TABLE `autor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,7 +53,7 @@ CREATE TABLE `editorial` (
   `contacto` varchar(30) DEFAULT NULL,
   `telefono` varchar(9) DEFAULT NULL,
   PRIMARY KEY (`ideditorial`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +62,7 @@ CREATE TABLE `editorial` (
 
 LOCK TABLES `editorial` WRITE;
 /*!40000 ALTER TABLE `editorial` DISABLE KEYS */;
-INSERT INTO `editorial` VALUES (1,'Editorial1','editorial1@gmail.com','987234562'),(2,'edtiorial2','segunda@hola.com','951456321'),(4,'Corfeo','cofeo@peru.gob.pe','987123902');
+INSERT INTO `editorial` VALUES (1,'Editorial1','editorial1@gmail.com','987234562'),(2,'edtiorial2','segunda@hola.com','951456321'),(4,'Corfeo','cofeo@peru.gob.pe','987123902'),(5,'Penguin Books','penguin.books@gmail.com','923463432');
 /*!40000 ALTER TABLE `editorial` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +78,7 @@ CREATE TABLE `genero` (
   `nombre` varchar(40) DEFAULT NULL,
   `descripcion` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idgenero`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +87,7 @@ CREATE TABLE `genero` (
 
 LOCK TABLES `genero` WRITE;
 /*!40000 ALTER TABLE `genero` DISABLE KEYS */;
-INSERT INTO `genero` VALUES (1,'Terror psicológico','descripcion1'),(2,'Terror psicológico','descripcion1'),(3,'Terror psicológico','descripcion1'),(4,'Romance','descripcion2'),(5,'Comedia','descripcion3'),(6,'Drama','descripcion4');
+INSERT INTO `genero` VALUES (17,'Terror','descripcion1'),(18,'Romance','descripcion2'),(19,'Novela','descripcion3'),(20,'Comedia','descripcion4'),(21,'Drama','descripcion5');
 /*!40000 ALTER TABLE `genero` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -315,7 +313,7 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `spListarGeneros`()
 BEGIN
 	SELECT *
-    FROM generos;
+    FROM genero;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -442,4 +440,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-01 11:10:17
+-- Dump completed on 2024-11-01 18:45:28

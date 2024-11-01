@@ -39,4 +39,14 @@
     <servlet-name>GenerosController</servlet-name>
     <url-pattern>/GenerosController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LibrosController</display-name>
+    <servlet-name>LibrosController</servlet-name>
+    <servlet-class>com.unu.controllers.LibrosController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LibrosController</servlet-name>
+    <url-pattern>/LibrosController</url-pattern>
+  </servlet-mapping>
 </web-app>
