@@ -37,7 +37,6 @@
 
 <div class="container">
 
-
 <a href="<%=url%>EditorialesController?op=nuevo" type="button"
 	class="btn btn-primary"> Nueva Editorial </a>
 <br> <br>

@@ -29,4 +29,14 @@
     <servlet-name>EditorialesController</servlet-name>
     <url-pattern>/EditorialesController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GenerosController</display-name>
+    <servlet-name>GenerosController</servlet-name>
+    <servlet-class>com.unu.controllers.GenerosController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GenerosController</servlet-name>
+    <url-pattern>/GenerosController</url-pattern>
+  </servlet-mapping>
 </web-app>
