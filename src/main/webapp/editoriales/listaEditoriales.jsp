@@ -39,6 +39,8 @@
 
 <a href="<%=url%>EditorialesController?op=nuevo" type="button"
 	class="btn btn-primary"> Nueva Editorial </a>
+<a href="<%=url%>" type="button"
+	class="btn btn-outline-info"> Volver a la página principal </a>	
 <br> <br>
  
 <table id="tabla" class="table table-bordered">

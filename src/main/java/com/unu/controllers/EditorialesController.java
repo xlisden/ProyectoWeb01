@@ -152,4 +152,5 @@ public class EditorialesController extends HttpServlet {
 			System.out.println("Ocurren problemas en eliminar() en EditorialesController " + e.getMessage());
 		}
 	}
+	
 }

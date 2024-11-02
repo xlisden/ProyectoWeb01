@@ -10,12 +10,14 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
+import com.unu.model.EditorialesModel;
 import com.unu.model.GenerosModel;
 
 @WebServlet(name = "LibrosController", urlPatterns = { "/LibrosController" })
 public class LibrosController extends HttpServlet {
 	
 	GenerosModel generosModel = new GenerosModel();
+	EditorialesModel editorialesModel = new EditorialesModel();
 	
 	private static final long serialVersionUID = 1L;
     public LibrosController() {
@@ -28,7 +30,7 @@ public class LibrosController extends HttpServlet {
 		
 		try(PrintWriter out = response.getWriter()) {
 			if(request.getParameter("op") == null) {
-				listarGeneros(request, response);
+				listarSelects(request, response);
 			}
 			
 		} catch (Exception e) {
@@ -43,13 +45,31 @@ public class LibrosController extends HttpServlet {
 		processRequest(request, response);
 	}
 	
-	protected void listarGeneros(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//	protected void listarGeneros(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		try {
+//			request.setAttribute("nombresGeneros", generosModel.listarNombresGeneros());
+//			request.getRequestDispatcher("/libros/nuevoLibro.jsp").forward(request, response);
+//		} catch (Exception e) {
+//			System.out.println("Error en listarGeneros() " + e.getMessage());
+//		}
+//	}
+	
+//	protected void listarEditoriales(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		try {
+//			request.setAttribute("nombresEditoriales", editorialesModel.listarNombresEditoriales());
+//			request.getRequestDispatcher("/libros/nuevoLibro.jsp").forward(request, response);
+//		} catch (Exception e) {
+//			System.out.println("Error en listarEditoriales() " + e.getMessage());
+//		}
+//	}
+
+	protected void listarSelects(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			request.setAttribute("nombresEditoriales", editorialesModel.listarNombresEditoriales());
 			request.setAttribute("nombresGeneros", generosModel.listarNombresGeneros());
-			
 			request.getRequestDispatcher("/libros/nuevoLibro.jsp").forward(request, response);
 		} catch (Exception e) {
-			System.out.println("Error en listarGeneros() " + e.getMessage());
+			System.out.println("Error en listarSelects() " + e.getMessage());
 		}
 	}
 

@@ -140,4 +140,23 @@ public class EditorialesModel {
 		return filasAfectadas;
 	}
 	
+	public List<String> listarNombresEditoriales(){
+		List<String> editoriales = new ArrayList<>();
+		try {
+			String sql = "SELECT e.nombre FROM editorial e;";
+			conexion = Conexion.abrirConexion();
+			st = conexion.createStatement();
+			rs = st.executeQuery(sql);
+			
+			while(rs.next()) {
+				editoriales.add(rs.getString(1));
+				System.out.println(rs.getString(1));
+			}
+			
+			conexion = Conexion.cerrarConexion();
+		} catch (Exception e) {
+			System.out.println("Error en listarNombresEditoriales() " + e.getMessage());
+		}
+		return editoriales;
+	}	
 }
