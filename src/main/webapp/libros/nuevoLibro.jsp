@@ -17,38 +17,54 @@
 <body>
 
 	<% String url = "http://localhost:8080/ProyectoWeb01/"; %>
+	<% List<String> listaGeneros = (List<String>) request.getAttribute("nombresGeneros"); %>
+	<% List<String> listaEditoriales = (List<String>) request.getAttribute("nombresEditoriales"); %>
 	
 	<div class="container">
+		<div class="form-group">
+			<form role="form" action="<%=url%>LibrosController" method="POST">
+				<input type="hidden" name="op" value="insertar"> <p></p>
+				<input type="text" name="nombre" id="nombre" placeholder="Nombre del libro" class="form-control">  <p></p>
+				<input type="number" name="existencias" id="existencias" placeholder="Existencias del libro" class="form-control"> <p></p>
+				<input type="number" name="precio" id="precio" placeholder="Precio del libro" class="form-control"> <p></p>
+				<select class="form-select" aria-label="Default select example" name="genero" id="genero">
+				  <option selected>Generos</option>
+				  <%
+				  if(listaGeneros != null){
+					  for(int i=0; i<listaGeneros.size(); i++){
+				  %>
+				  		<option><%= listaGeneros.get(i) %></option>
+				  <%
+					  }
+				  }
+				  %>
+				</select>
+				<a href="<%=url%>LibrosController?op=nuevo" class="btn btn-outline-dark">Nuevo genero</a> <p></p>
+				<select class="form-select" aria-label="Default select example" name="editorial" id="editorial">
+				  <option selected>Editoriales</option>
+				  <%
+				  if(listaEditoriales != null){
+					  for(int i=0; i<listaEditoriales.size(); i++){
+				  %>
+				  		<option><%= listaEditoriales.get(i) %></option>
+				  <%
+					  }
+				  }
+				  %>
+				</select>
+				<a href="<%=url%>LibrosController?op=nuevo" class="btn btn-outline-dark">Nueva editorial</a>  <p></p>
+				<input type="text" name="autor" id="autor" value="Joyo Mayes" class="form-control"> <p></p>
+				<input type="text" name="descripcion" id="descripcion" placeholder="Descripcion" class="form-control"> <p></p>
+				<br>
+				<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
+				
+			</form>
+		</div>
 		<br>
-		<% List<String> listaGeneros = (List<String>) request.getAttribute("nombresGeneros"); %>
-		<select class="form-select" aria-label="Default select example">
-		  <option selected>Generos</option>
-		  <%
-		  if(listaGeneros != null){
-			  for(int i=0; i<listaGeneros.size(); i++){
-		  %>
-		  		<option><%= listaGeneros.get(i) %></option>
-		  <%
-			  }
-		  }
-		  %>
-		</select>
-		<a href="<%=url%>EditorialesController?op=nuevo" class="btn btn-outline-dark">Nuevo genero</a>
-		<br>
-		<% List<String> listaEditoriales = (List<String>) request.getAttribute("nombresEditoriales"); %>
-		<select class="form-select" aria-label="Default select example">
-		  <option selected>Editoriales</option>
-		  <%
-		  if(listaEditoriales != null){
-			  for(int i=0; i<listaEditoriales.size(); i++){
-		  %>
-		  		<option><%= listaEditoriales.get(i) %></option>
-		  <%
-			  }
-		  }
-		  %>
-		</select>
-		<a href="<%=url%>EditorialesController?op=nuevo" class="btn btn-outline-dark">Nueva editorial</a>
+		
+
+		
+
 	</div>	
 
 
