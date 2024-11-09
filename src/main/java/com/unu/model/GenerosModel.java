@@ -15,8 +15,8 @@ public class GenerosModel {
 	private Connection conexion;
 	private ResultSet rs;
 	private Statement st;
-	
-	public List<Genero> listarGeneros(){
+
+	public List<Genero> listarGeneros() {
 		List<Genero> listaGeneros = null;
 		try {
 			String sql = "CALL spListarGeneros()";
@@ -24,22 +24,22 @@ public class GenerosModel {
 			conexion = Conexion.abrirConexion();
 			cs = conexion.prepareCall(sql);
 			rs = cs.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				Genero genero = new Genero();
 				genero.setIdgenero(rs.getInt("idgenero"));
 				genero.setNombre(rs.getString("nombre"));
 				genero.setDescripcion(rs.getString("descripcion"));
 				listaGeneros.add(genero);
 			}
-			
+
 			conexion = Conexion.cerrarConexion();
 		} catch (Exception e) {
 			System.out.println("Error en listarGeneros() " + e.getMessage());
 		}
 		return listaGeneros;
 	}
-	
+
 	public Genero obtenerGenero(int idgenero) {
 		Genero genero = null;
 		try {
@@ -48,39 +48,61 @@ public class GenerosModel {
 			cs = conexion.prepareCall(sql);
 			cs.setInt(1, idgenero);
 			rs = cs.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				genero = new Genero();
 				genero.setIdgenero(rs.getInt("idgenero"));
 				genero.setNombre(rs.getString("nombre"));
 				genero.setDescripcion(rs.getString("descripcion"));
 			}
-			
+
 			conexion = Conexion.cerrarConexion();
 		} catch (Exception e) {
 			System.out.println("Error en obtenerGenero() " + e.getMessage());
 		}
 		return genero;
 	}
+
+	public int insertarGenero(Genero genero) {
+		int filasAfectadas = 0;
+		try {
+			String sql = "CALL spInsertarGenero(?, ?);";
+			conexion = Conexion.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			
+			cs.setString(1, genero.getNombre());
+			cs.setString(2, genero.getDescripcion());
+			filasAfectadas = cs.executeUpdate();
+			
+			if(filasAfectadas == 0) {
+				System.out.println("genero NO insertado en model");
+			}
+			conexion = Conexion.cerrarConexion();
+		} catch (Exception e) {
+			System.out.println("insertarGenero() " + e.getMessage());
+		}
+		return filasAfectadas;
+	}
 	
-	public List<String> listarNombresGeneros(){
+
+	
+	public List<String> listarNombresGeneros() {
 		List<String> generos = new ArrayList<>();
 		try {
 			String sql = "SELECT g.nombre FROM genero g;";
 			conexion = Conexion.abrirConexion();
 			st = conexion.createStatement();
 			rs = st.executeQuery(sql);
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				generos.add(rs.getString(1));
-				System.out.println(rs.getString(1));
+//				System.out.println(rs.getString(1));
 			}
-			
+
 			conexion = Conexion.cerrarConexion();
 		} catch (Exception e) {
 			System.out.println("Error en listarNombresGeneros() " + e.getMessage());
 		}
 		return generos;
 	}
-	
 }

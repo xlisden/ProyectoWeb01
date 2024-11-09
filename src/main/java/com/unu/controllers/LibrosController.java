@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.unu.beans.Editorial;
 import com.unu.beans.Libro;
+import com.unu.model.AutoresModel;
 import com.unu.model.EditorialesModel;
 import com.unu.model.GenerosModel;
 import com.unu.model.LibrosModel;
@@ -19,9 +20,10 @@ import com.unu.model.LibrosModel;
 @WebServlet(name = "LibrosController", urlPatterns = { "/LibrosController" })
 public class LibrosController extends HttpServlet {
 	
-	GenerosModel generosModel = new GenerosModel();
-	EditorialesModel editorialesModel = new EditorialesModel();
-	LibrosModel librosModel = new LibrosModel();
+	private AutoresModel autoresModel = new AutoresModel();
+	private EditorialesModel editorialesModel = new EditorialesModel();
+	private GenerosModel generosModel = new GenerosModel();
+	private LibrosModel librosModel = new LibrosModel();
 	
 	private static final long serialVersionUID = 1L;
     public LibrosController() {
@@ -34,13 +36,22 @@ public class LibrosController extends HttpServlet {
 		
 		try(PrintWriter out = response.getWriter()) {
 			if(request.getParameter("op") == null) {
-				listarSelects(request, response);
+//				listarSelects(request, response);
+				listar(request, response);
+				return;
 			}
 			
 			String operacion = request.getParameter("op");
 			switch (operacion) {
-				case "insertar":
-					insertar(request, response);
+			case "listar":
+				listar(request, response);
+				break;
+			case "nuevo":
+				listarSelects(request, response);
+				break;
+			case "insertar":
+				insertar(request, response);
+				break;
 			}
 		} catch (Exception e) {
 			System.out.println("Error en processRequest() " + e.getMessage());
@@ -58,9 +69,20 @@ public class LibrosController extends HttpServlet {
 		try {
 			request.setAttribute("nombresEditoriales", editorialesModel.listarNombresEditoriales());
 			request.setAttribute("nombresGeneros", generosModel.listarNombresGeneros());
+			request.setAttribute("nombresAutores", autoresModel.listarNombresAutores());
 			request.getRequestDispatcher("/libros/nuevoLibro.jsp").forward(request, response);
 		} catch (Exception e) {
 			System.out.println("Error en listarSelects() " + e.getMessage());
+		}
+	}
+	
+	protected void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			request.setAttribute("listaLibros", librosModel.listarLibros());
+			request.getRequestDispatcher("/libros/listaLibros.jsp").forward(request, response);
+//			response.sendRedirect(request.getContextPath() + "/LibrosController?op=listar");
+		} catch (Exception e) {
+			System.out.println("Error en listar() " + e.getMessage());
 		}
 	}
 	
@@ -80,7 +102,7 @@ public class LibrosController extends HttpServlet {
 			} else {
 				request.getSession().setAttribute("fracaso", "libro no se ha creado");
 			}
-			response.sendRedirect(request.getContextPath() + "/LibrosController?op=insertar");
+			response.sendRedirect(request.getContextPath() + "/LibrosController?op=listar");
 		} catch (Exception e) {
 			System.out.println("Ocurren problemas en insertar() en LibrosController " + e.getMessage());
 		}

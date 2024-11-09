@@ -28,7 +28,7 @@
 		autor = new Autor();
 	} else {
 		autor = (Autor) request.getAttribute("autor");
-		System.out.println("Autor: " + autor.getNombre() + " " + autor.getNacionalidad());
+// 		System.out.println("Autor: " + autor.getNombre() + " " + autor.getNacionalidad());
 	}
 	%>
 	

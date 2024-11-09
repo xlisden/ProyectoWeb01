@@ -31,7 +31,7 @@
 			editorial = new Editorial();
 		} else {
 			editorial = (Editorial) request.getAttribute("editorial");
-			System.out.println("Editorial: " + editorial.getNombre() + " " + editorial.getContacto() + " " + editorial.getTelefono());
+// 			System.out.println("Editorial: " + editorial.getNombre() + " " + editorial.getContacto() + " " + editorial.getTelefono());
 		}
 	%>	
 	

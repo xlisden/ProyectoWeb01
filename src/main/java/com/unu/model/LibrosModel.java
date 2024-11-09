@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.unu.beans.Libro;
 
 public class LibrosModel {
@@ -36,6 +39,35 @@ public class LibrosModel {
 		}
 		conexion = Conexion.cerrarConexion();
 		return filasAfectadas;
+	}
+	
+	public List<Libro> listarLibros() {
+		List<Libro> listaLibros = null;
+		try {
+			String sql = "CALL spListarLibros()";
+			listaLibros = new ArrayList<Libro>();
+			conexion = Conexion.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			rs = cs.executeQuery();
+
+			while (rs.next()) {
+				Libro libro = new Libro();
+				libro.setIdLibro(rs.getInt("idlibro"));
+				libro.setNombre(rs.getString("nombre"));
+				libro.setExistencias(rs.getInt("existencias"));
+				libro.setPrecio(rs.getDouble("precio"));
+				libro.setAutor(rs.getString("autor"));
+				libro.setEditorial(rs.getString("editorial"));
+				libro.setGenero(rs.getString("genero"));
+				libro.setDescripcion(rs.getString("descripcion"));
+				listaLibros.add(libro);
+			}
+
+			conexion = Conexion.cerrarConexion();
+		} catch (Exception e) {
+			System.out.println("Error en listarLibros() " + e.getMessage());
+		}
+		return listaLibros;
 	}
 
 }

@@ -17,14 +17,6 @@ public class AutoresModel {
 	private ResultSet rs;
 	private Statement st;
 
-//	public List<Autor> listarAutores() {
-//		ArrayList<Autor> autores = new ArrayList<>();
-//		autores.add(new Autor(1, "Garcia Marquez", "Argentina"));
-//		autores.add(new Autor(2, "Borges", "Argentina"));
-//		autores.add(new Autor(3, "Allende", "Chilena"));
-//		return autores;
-//	}
-
 	public List<Autor> listarAutores() throws SQLException {
 		try {
 			List<Autor> lista = new ArrayList<>();
@@ -156,5 +148,24 @@ public class AutoresModel {
 		}
 		return totalAutores;
 	}
+	
+	public List<String> listarNombresAutores(){
+		List<String> autores = new ArrayList<>();
+		try {
+			String sql = "SELECT a.nombre FROM autor a;";
+			conexion = Conexion.abrirConexion();
+			st = conexion.createStatement();
+			rs = st.executeQuery(sql);
+			
+			while(rs.next()) {
+				autores.add(rs.getString(1));
+			}
+			
+			conexion = Conexion.cerrarConexion();
+		} catch (Exception e) {
+			System.out.println("Error en listarNombresAutores() " + e.getMessage());
+		}
+		return autores;
+	}	
 
 }

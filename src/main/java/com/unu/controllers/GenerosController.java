@@ -16,7 +16,7 @@ import com.unu.model.GenerosModel;
 public class GenerosController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private GenerosModel modelo = new GenerosModel();
+	private GenerosModel generosModelo = new GenerosModel();
 	
     public GenerosController() {
     	super();
@@ -28,34 +28,60 @@ public class GenerosController extends HttpServlet {
 		
 		try(PrintWriter out = response.getWriter()) {
 			if(request.getParameter("op") == null) {
-//				listar(request, response);
+				listar(request, response);
+				return;
+			}
+			
+			String operacion = request.getParameter("op");
+			switch (operacion) {
+			case "listar":
+				listar(request, response);
+				break;
+			case "nuevo":
+				request.getRequestDispatcher("/generos/nuevoGenero.jsp").forward(request, response);
+				break;
+			case "insertar":
+				insertar(request, response);
+				break;
 			}
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("processRequest(): " + e.getMessage());
 		}
     }
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		processRequest(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		processRequest(request, response);
 	}
 	
 	protected void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			request.setAttribute("listaGeneros", modelo.listarGeneros());
+			request.setAttribute("listaGeneros", generosModelo.listarGeneros());
 			
-			Iterator<Genero> it = modelo.listarGeneros().iterator();
-			while(it.hasNext()) {
-				Genero genero = it.next();
-			}
-			
-			request.getRequestDispatcher("/generos/ListaGeneros.jsp").forward(request, response);
+			request.getRequestDispatcher("/generos/listaGeneros.jsp").forward(request, response);
 		} catch (Exception e) {
 			System.out.println("Error en listar() en GenerosController: " + e.getMessage());
+		}
+	}
+	
+	protected void insertar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			Genero genero = new Genero();
+			genero.setNombre(request.getParameter("nombre"));
+			genero.setDescripcion(request.getParameter("descripcion"));
+			
+			if(generosModelo.insertarGenero(genero) > 0) {
+				request.getSession().setAttribute("exito", "genero insertado");
+			}else {
+				request.getSession().setAttribute("fracaso", "genero NO insertado");
+			}
+			response.sendRedirect(request.getContextPath() + "/GenerosController?op=listar");
+		} catch (Exception e) {
+			System.out.println("Error en insertar() en GenerosController: " + e.getMessage());
 		}
 	}
 

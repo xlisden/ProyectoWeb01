@@ -44,7 +44,7 @@
 <a href="<%=url%>AutoresController?op=nuevo" type="button"
 	class="btn btn-primary"> Nuevo Autor </a>
 <a href="<%=url%>" type="button"
-	class="btn btn-outline-info"> Volver a la página principal </a>
+	class="btn btn-outline-primary"> Volver a la página principal </a>
 <br> <br>
 
 <table id="tabla" class="table table-bordered">

@@ -18,15 +18,6 @@ public class EditorialesModel {
 	private ResultSet rs;
 	private Statement st;
 
-//	public List<Editorial> listarEditoriales(){
-//		ArrayList<Editorial> editoriales = new ArrayList<>();
-//		editoriales.add(new Editorial(1, "Editorial Uno", "nombre1", "987654321"));
-//		editoriales.add(new Editorial(2, "Editorial Dos", "nombre2", "951753654"));
-//		editoriales.add(new Editorial(3, "Editorial Tres", "nombre3", "963582417"));
-//		editoriales.add(new Editorial(4, "Editorial Cuatro", "nombre4", "987321456"));
-//		return editoriales;
-//	}
-	
 	public List<Editorial> listarEditoriales(){
 		ArrayList<Editorial> editoriales = null;
 		try {
@@ -150,7 +141,7 @@ public class EditorialesModel {
 			
 			while(rs.next()) {
 				editoriales.add(rs.getString(1));
-				System.out.println(rs.getString(1));
+//				System.out.println(rs.getString(1));
 			}
 			
 			conexion = Conexion.cerrarConexion();
