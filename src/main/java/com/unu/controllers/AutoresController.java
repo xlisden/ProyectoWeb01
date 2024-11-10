@@ -50,7 +50,6 @@ public class AutoresController extends HttpServlet {
 			case "eliminar":
 				eliminar(request, response);
 				break;
-
 			}
 		}
 	}

@@ -69,5 +69,25 @@ public class LibrosModel {
 		}
 		return listaLibros;
 	}
+	
+	public int eliminarLibro(int idlibro) {
+		int filasAfectadas = 0;
+		try {
+			String sql = "CALL spEliminarLibro(?);";
+			conexion = Conexion.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			cs.setInt(1, idlibro);
+			filasAfectadas = cs.executeUpdate();
+			
+			if (filasAfectadas == 0) {
+				System.out.println("error al insertar libro");
+			}
+			
+			conexion = Conexion.cerrarConexion();
+		} catch (Exception e) {
+			System.out.println("eliminarLibro(): " + e.getMessage());
+		}
+		return filasAfectadas;
+	}
 
 }

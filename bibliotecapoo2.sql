@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `bibliotecapoo2` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `bibliotecapoo2`;
 -- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: bibliotecapoo2
@@ -27,7 +29,7 @@ CREATE TABLE `autor` (
   `nombre` varchar(50) DEFAULT NULL,
   `nacionalidad` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idautor`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,7 +38,7 @@ CREATE TABLE `autor` (
 
 LOCK TABLES `autor` WRITE;
 /*!40000 ALTER TABLE `autor` DISABLE KEYS */;
-INSERT INTO `autor` VALUES (1,'Juanita Alcachofa','peruano'),(2,'Garcia Marquez','Argentina'),(3,'Borges','Argentina'),(4,'Allende','Chilena'),(5,'Anita','Peruana'),(13,'Joyo Mayes','Británica');
+INSERT INTO `autor` VALUES (1,'Juanita Alcachofa','peruano'),(2,'Garcia Marquez','Argentina'),(3,'Borges','Argentina'),(4,'Allende','Chilena'),(13,'Joyo Mayes','Británica'),(15,'Lisa','Tailandesa');
 /*!40000 ALTER TABLE `autor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,7 +55,7 @@ CREATE TABLE `editorial` (
   `contacto` varchar(30) DEFAULT NULL,
   `telefono` varchar(9) DEFAULT NULL,
   PRIMARY KEY (`ideditorial`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +64,7 @@ CREATE TABLE `editorial` (
 
 LOCK TABLES `editorial` WRITE;
 /*!40000 ALTER TABLE `editorial` DISABLE KEYS */;
-INSERT INTO `editorial` VALUES (1,'Editorial1','editorial1@gmail.com','987234562'),(2,'edtiorial2','segunda@hola.com','951456321'),(4,'Corfeo','cofeo@peru.gob.pe','987123902'),(5,'Penguin Books','penguin.books@gmail.com','923463432');
+INSERT INTO `editorial` VALUES (1,'Editorial1','editorial1@gmail.com','987234562'),(2,'edtiorial2','segunda@hola.com','951456321'),(4,'Corfeo','cofeo@peru.gob.pe','987123902'),(5,'Penguin Books','penguin.books@gmail.com','923463432'),(6,'Editorial insana','insaniedad@g.com','987234567');
 /*!40000 ALTER TABLE `editorial` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,7 +80,7 @@ CREATE TABLE `genero` (
   `nombre` varchar(40) DEFAULT NULL,
   `descripcion` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idgenero`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,7 +89,7 @@ CREATE TABLE `genero` (
 
 LOCK TABLES `genero` WRITE;
 /*!40000 ALTER TABLE `genero` DISABLE KEYS */;
-INSERT INTO `genero` VALUES (17,'Terror','descripcion1'),(18,'Romance','descripcion2'),(19,'Novela','descripcion3'),(20,'Comedia','descripcion4'),(21,'Drama','descripcion5');
+INSERT INTO `genero` VALUES (17,'Terror','descripcion1'),(18,'Romance','descripcion2'),(19,'Novela','descripcion3'),(20,'Comedia','descripcion4'),(21,'Drama','descripcion5'),(22,'Genero de Prueba','Descripcion hambrienta');
 /*!40000 ALTER TABLE `genero` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +116,7 @@ CREATE TABLE `libro` (
   CONSTRAINT `fk_libro_autor` FOREIGN KEY (`idautor`) REFERENCES `autor` (`idautor`),
   CONSTRAINT `fk_libro_editorial` FOREIGN KEY (`ideditorial`) REFERENCES `editorial` (`ideditorial`),
   CONSTRAINT `fk_libro_genero` FOREIGN KEY (`idgenero`) REFERENCES `genero` (`idgenero`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,6 +125,7 @@ CREATE TABLE `libro` (
 
 LOCK TABLES `libro` WRITE;
 /*!40000 ALTER TABLE `libro` DISABLE KEYS */;
+INSERT INTO `libro` VALUES (2,'libro6',6,6.00,13,5,18,'descripcion6'),(3,'Libro Primero',6,20.00,1,5,18,'Descripcion sobre un libro...'),(4,'Libro Segundo',83,49.00,4,1,21,'Descripcion sobre un libro...2');
 /*!40000 ALTER TABLE `libro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,6 +166,50 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spEliminarEditorial`(IN ideditorial
 BEGIN
 	DELETE FROM editorial e
     WHERE e.ideditorial = ideditorial;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `spEliminarGenero` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spEliminarGenero`(
+	IN idgenero INT
+)
+BEGIN
+	DELETE FROM genero g
+    WHERE g.idgenero = idgenero;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `spEliminarLibro` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spEliminarLibro`(
+	IN idlibro INT
+)
+BEGIN
+	DELETE FROM libro l
+    WHERE l.idlibro = idlibro;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -238,7 +285,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `spInsertarGeneros` */;
+/*!50003 DROP PROCEDURE IF EXISTS `spInsertarLibros` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -248,12 +295,36 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarGeneros`(
-	IN nombre VARCHAR(50), IN descripcion VARCHAR(50)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spInsertarLibros`(
+    IN nombre VARCHAR(50),
+	IN existencias INT,
+    IN precio DECIMAL(10,2),
+    IN nomAutor VARCHAR(50),
+    IN nomEditorial VARCHAR(50),
+    IN nomGenero VARCHAR(50),
+    IN descripcion TEXT
 )
 BEGIN
-	INSERT INTO genero (idgenero, nombre, descripcion)
-    VALUES (0, nombre, descripcion);
+
+	SET @idautor = (
+		SELECT idautor
+		FROM autor a
+		WHERE a.nombre = nomAutor
+	);
+	SET @ideditorial = (
+		SELECT ideditorial
+		FROM editorial e
+		WHERE e.nombre = nomEditorial
+	);
+	SET @idgenero = (
+		SELECT idgenero
+		FROM genero g
+		WHERE g.nombre = nomGenero
+	);
+
+    INSERT INTO libro (idlibro, nombre, existencias, precio, idautor, ideditorial, idgenero, descripcion)
+    VALUES (0, nombre, existencias, precio, @idautor, @ideditorial, @idgenero, descripcion);
+    
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -314,6 +385,29 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spListarGeneros`()
 BEGIN
 	SELECT *
     FROM genero;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `spListarLibros` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spListarLibros`()
+BEGIN
+	SELECT l.idlibro, l.nombre, l.existencias, l.precio, a.nombre as autor, e.nombre as editorial, g.nombre as genero, l.descripcion
+    FROM libro l
+    INNER JOIN autor a ON a.idautor = l.idautor
+    INNER JOIN editorial e ON e.ideditorial = l.ideditorial
+    INNER JOIN genero g ON g.idgenero = l.idgenero;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -440,4 +534,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-01 18:45:28
+-- Dump completed on 2024-11-09 21:59:51

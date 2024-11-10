@@ -52,6 +52,9 @@ public class LibrosController extends HttpServlet {
 			case "insertar":
 				insertar(request, response);
 				break;
+			case "eliminar":
+				eliminar(request, response);
+				break;
 			}
 		} catch (Exception e) {
 			System.out.println("Error en processRequest() " + e.getMessage());
@@ -86,7 +89,7 @@ public class LibrosController extends HttpServlet {
 		}
 	}
 	
-	private void insertar(HttpServletRequest request, HttpServletResponse response) {
+	protected void insertar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Libro libro = new Libro();
 			libro.setNombre(request.getParameter("nombre"));
@@ -105,6 +108,22 @@ public class LibrosController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/LibrosController?op=listar");
 		} catch (Exception e) {
 			System.out.println("Ocurren problemas en insertar() en LibrosController " + e.getMessage());
+		}
+	}
+	
+	protected void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			int idlibro = Integer.parseInt(request.getParameter("idlibro"));
+			
+			if(librosModel.eliminarLibro(idlibro) > 0) {
+				request.getSession().setAttribute("exito", "libro eliminado");
+			} else {
+				request.getSession().setAttribute("fracaso", "libro NO eliminado");
+			}
+//			request.getRequestDispatcher("/LibrosController?op=listar").forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/LibrosController?op=listar");
+		} catch (Exception e) {
+			System.out.println("eliminar(): " + e.getMessage());
 		}
 	}
 }
