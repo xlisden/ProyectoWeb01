@@ -25,16 +25,16 @@
 </script>
 </head>
 <body>
-
-<% String url = "http://localhost:8080/ProyectoWeb01/"; %>
+<%@ include file='/cabeceraMenu.jsp' %>
+<%-- <% String url = "http://localhost:8080/ProyectoWeb01/"; %> --%>
 <% List<Genero> generos = (List<Genero>) request.getAttribute("listaGeneros"); %>
 
 <div class="container">
 	<br>
 	<a href="<%=url%>GenerosController?op=nuevo"
 		class="btn btn-primary"> Nuevo genero </a>
-	<a href="<%=url%>" type="button"
-		class="btn btn-outline-primary"> Volver a la página principal </a>	
+<%-- 	<a href="<%=url%>" type="button" --%>
+<!-- 		class="btn btn-outline-primary"> Volver a la página principal </a>	 -->
 	<br> <br>
 	<table id="tabla" class="table table-bordered">
 		<thead>

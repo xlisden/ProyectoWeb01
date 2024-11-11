@@ -28,23 +28,24 @@
 		}
 	}
 </script>
- 
+
 </head>
 <body>
 
 
 
 <br>
-<%
-	String url = "http://localhost:8080/ProyectoWeb01/";
-%>
+
+<%@ include file='/cabeceraMenu.jsp' %>
+
+<%-- <% String urlInsana = "http://localhost:8080/ProyectoWeb01/"; %> --%>
 
 <div class="container">
-
+<br>
 <a href="<%=url%>AutoresController?op=nuevo" type="button"
 	class="btn btn-primary"> Nuevo Autor </a>
-<a href="<%=url%>" type="button"
-	class="btn btn-outline-primary"> Volver a la página principal </a>
+<%-- <a href="<%=url%>" type="button" --%>
+<!-- 	class="btn btn-outline-primary"> Volver a la página principal </a> -->
 <br> <br>
 
 <table id="tabla" class="table table-bordered">

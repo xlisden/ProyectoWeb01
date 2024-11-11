@@ -28,17 +28,20 @@
 </head>
 <body>
 	
-	<% String url = "http://localhost:8080/ProyectoWeb01/"; %>
+<%-- 	<% String url = "http://localhost:8080/ProyectoWeb01/"; %> --%>
 
-	<div class="container">
-		<br>
-		<h1>Navegar a:</h1>
-		<br>
-	  	<a href="<%=url%>AutoresController" class="btn btn-info"> Autores </a>
-	  	<a href="<%=url%>EditorialesController" class="btn btn-info"> Editoriales </a>
-	  	<a href="<%=url%>GenerosController" class="btn btn-info"> Generos </a>
-	  	<a href="<%=url%>LibrosController" class="btn btn-info"> Libros </a>
-	</div>
+<!-- 	<div class="container"> -->
+<!-- 		<br> -->
+<!-- 		<h1>Navegar a:</h1> -->
+<!-- 		<br> -->
+<%-- 	  	<a href="<%=url%>AutoresController" class="btn btn-info"> Autores </a> --%>
+<%-- 	  	<a href="<%=url%>EditorialesController" class="btn btn-info"> Editoriales </a> --%>
+<%-- 	  	<a href="<%=url%>GenerosController" class="btn btn-info"> Generos </a> --%>
+<%-- 	  	<a href="<%=url%>LibrosController" class="btn btn-info"> Libros </a> --%>
+<!-- 	</div> -->
+	
+<%-- 	<%@ include file='/cabecera.jsp' %> --%>
+	<%@ include file='/cabeceraMenu.jsp' %>
 
-</body>
+</body>`
 </html>

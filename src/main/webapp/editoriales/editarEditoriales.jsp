@@ -21,9 +21,10 @@
 <body>
 
 <div class="container">
-  
+<%@ include file='/cabeceraMenu.jsp' %>
+
 	<%
-		String url = "http://localhost:8080/ProyectoWeb01/";
+// 		String url = "http://localhost:8080/ProyectoWeb01/";
 		Editorial editorial = null;
 		HttpSession sesion = request.getSession();
 	

@@ -20,9 +20,10 @@
 <body>
 
 <div class="container">
+<%@ include file='/cabeceraMenu.jsp' %>
 	<br>
 	<h3>Nueva editorial</h3>
-	<% String url = "http://localhost:8080/ProyectoWeb01/"; %>
+<%-- 	<% String url = "http://localhost:8080/ProyectoWeb01/"; %> --%>
 	<div class="form-group">
 	<form role="form" action="<%=url %>EditorialesController" method="POST">
 		<input type="hidden" name="op" value="insertar">

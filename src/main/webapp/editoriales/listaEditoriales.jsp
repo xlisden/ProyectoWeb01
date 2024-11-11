@@ -31,16 +31,16 @@
 </head>
 <body>
 
-
+<%@ include file='/cabeceraMenu.jsp' %>
 <br>
-<%String url = "http://localhost:8080/ProyectoWeb01/";%>
+<%-- <%String url = "http://localhost:8080/ProyectoWeb01/";%> --%>
 
 <div class="container">
 
 <a href="<%=url%>EditorialesController?op=nuevo" type="button"
 	class="btn btn-primary"> Nueva Editorial </a>
-<a href="<%=url%>" type="button"
-	class="btn btn-outline-primary"> Volver a la página principal </a>	
+<%-- <a href="<%=url%>" type="button" --%>
+<!-- 	class="btn btn-outline-primary"> Volver a la página principal </a>	 -->
 <br> <br>
  
 <table id="tabla" class="table table-bordered">

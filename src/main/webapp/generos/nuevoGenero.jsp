@@ -11,9 +11,11 @@
 </head>
 <body>
 
-<% String url = "http://localhost:8080/ProyectoWeb01/"; %>
+<%-- <% String url = "http://localhost:8080/ProyectoWeb01/"; %> --%>
 
 <div class="container">
+<%@ include file='/cabeceraMenu.jsp' %>
+
 	<br>
 	<h3>Nuevo genero</h3>
 	<div class="form-group">

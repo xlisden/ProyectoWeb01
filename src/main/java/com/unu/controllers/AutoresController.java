@@ -7,10 +7,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import com.unu.beans.Autor;
 import com.unu.model.AutoresModel;
+import com.unu.model.Mensajes;
 
 @WebServlet(name = "AutoresController", urlPatterns = { "/AutoresController" })
 public class AutoresController extends HttpServlet {
@@ -88,19 +91,43 @@ public class AutoresController extends HttpServlet {
 			System.out.println("Ocurren problemas en listar() en AutoresController " + e.getMessage());
 		}
 	}
+	
+	private boolean validar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		boolean incorrecto = false;
+		List<String> listaErrores = new ArrayList<String>();
+		try {
+			if(request.getParameter("nombre").isEmpty()) {
+				listaErrores.add(Mensajes.AUTOR_NOMBRE_ERROR);
+				incorrecto = true;
+			}
+			if(request.getParameter("nacionalidad").isEmpty()) {
+				listaErrores.add(Mensajes.AUTOR_NACIONALIDAD_ERROR);
+				incorrecto = true;
+			}
+			request.setAttribute("respuesta", incorrecto);
+			request.setAttribute("listaErrorres", listaErrores);
+		} catch (Exception e) {
+			System.out.println("validar(): " + e.getMessage());
+		}
+		return incorrecto;
+	}
 
 	private void insertar(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			Autor autor = new Autor();
-			autor.setNombre(request.getParameter("nombre"));
-			autor.setNacionalidad(request.getParameter("nacionalidad"));
+			if(!validar(request, response)) {
+				Autor autor = new Autor();
+				autor.setNombre(request.getParameter("nombre"));
+				autor.setNacionalidad(request.getParameter("nacionalidad"));
 
-			if (modelo.insertarAutor(autor) > 0) {
-				request.getSession().setAttribute("exito", "Autor creado exitosamente");
-			} else {
-				request.getSession().setAttribute("fracaso", "El autor no se ha creado");
+				if (modelo.insertarAutor(autor) > 0) {
+					request.getSession().setAttribute("exito", "Autor creado exitosamente");
+				} else {
+					request.getSession().setAttribute("fracaso", "El autor no se ha creado");
+				}
+				response.sendRedirect(request.getContextPath() + "/AutoresController?op=listar");
+			}else {
+				request.getRequestDispatcher("/autores/nuevoAutor.jsp").forward(request, response);
 			}
-			response.sendRedirect(request.getContextPath() + "/AutoresController?op=listar");
 		} catch (Exception e) {
 			System.out.println("Ocurren problemas en insertar() en AutoresController" + e.getMessage());
 		}
@@ -108,15 +135,18 @@ public class AutoresController extends HttpServlet {
 
 	private void obtener(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			int idautor = Integer.parseInt(request.getParameter("idautor"));
-			Autor autor = modelo.obtenerAutor(idautor);
-			System.out.println("Autor en obtener: " + autor.getIdAutor() + " " + autor.getNombre());
-			
-			if (autor != null) {
-				request.setAttribute("autor", autor);
-				request.getRequestDispatcher("/autores/editarAutor.jsp").forward(request, response);
-			} else {
-				response.sendRedirect(request.getContextPath() + "/error404.jsp");
+			if(!validar(request, response)) {
+				int idautor = Integer.parseInt(request.getParameter("idautor"));
+				Autor autor = modelo.obtenerAutor(idautor);
+				System.out.println("Autor en obtener: " + autor.getIdAutor() + " " + autor.getNombre());
+				
+				if (autor != null) {
+					request.setAttribute("autor", autor);
+					request.getRequestDispatcher("/autores/editarAutor.jsp").forward(request, response);
+				} else {
+					response.sendRedirect(request.getContextPath() + "/error404.jsp");
+				}
+
 			}
 
 		} catch (Exception e) {

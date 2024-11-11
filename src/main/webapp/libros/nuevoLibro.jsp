@@ -32,8 +32,9 @@
 
 </head>
 <body>
+<%@ include file='/cabeceraMenu.jsp' %>
 
-	<% String url = "http://localhost:8080/ProyectoWeb01/"; %>
+<%-- 	<% String url = "http://localhost:8080/ProyectoWeb01/"; %> --%>
 	<% List<String> listaGeneros = (List<String>) request.getAttribute("nombresGeneros"); %>
 	<% List<String> listaEditoriales = (List<String>) request.getAttribute("nombresEditoriales"); %>
 	<% List<String> listaAutores = (List<String>) request.getAttribute("nombresAutores"); %>

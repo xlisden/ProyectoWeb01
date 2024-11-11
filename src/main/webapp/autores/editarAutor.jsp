@@ -20,7 +20,7 @@
 </head>
 <body>
 	<%
-	String url = "http://localhost:8080/ProyectoWeb01/";
+// 	String url = "http://localhost:8080/ProyectoWeb01/";
 	Autor autor;
 	HttpSession sesion = request.getSession();
 
@@ -31,6 +31,10 @@
 // 		System.out.println("Autor: " + autor.getNombre() + " " + autor.getNacionalidad());
 	}
 	%>
+
+<div class="container">
+
+<%@ include file='/cabeceraMenu.jsp' %>
 	
 		<h3>Editar autor</h3>
 		<br>
@@ -50,5 +54,6 @@
 		class="btn btn-outline-primary"> Volver </a>
 	</form>
 	</div>
+</div>
 </body>
 </html>
