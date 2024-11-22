@@ -36,7 +36,6 @@ public class LibrosController extends HttpServlet {
 		
 		try(PrintWriter out = response.getWriter()) {
 			if(request.getParameter("op") == null) {
-//				listarSelects(request, response);
 				listar(request, response);
 				return;
 			}
@@ -51,6 +50,12 @@ public class LibrosController extends HttpServlet {
 				break;
 			case "insertar":
 				insertar(request, response);
+				break;
+			case "obtener":
+				obtener(request, response);
+				break;
+			case "modificar":
+				modificar(request, response);
 				break;
 			case "eliminar":
 				eliminar(request, response);
@@ -83,7 +88,6 @@ public class LibrosController extends HttpServlet {
 		try {
 			request.setAttribute("listaLibros", librosModel.listarLibros());
 			request.getRequestDispatcher("/libros/listaLibros.jsp").forward(request, response);
-//			response.sendRedirect(request.getContextPath() + "/LibrosController?op=listar");
 		} catch (Exception e) {
 			System.out.println("Error en listar() " + e.getMessage());
 		}
@@ -111,6 +115,45 @@ public class LibrosController extends HttpServlet {
 		}
 	}
 	
+	protected void obtener(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			int idlibro = Integer.parseInt(request.getParameter("idlibro"));
+			Libro libro = librosModel.obtenerLibro(idlibro);
+			if(libro != null) {
+				request.setAttribute("libro", libro);
+				request.getRequestDispatcher("/libros/editarLibro.jsp");
+			}else {
+				System.out.println("obtener(): libro nulo");
+				response.sendRedirect(request.getContextPath() + "/error404.jsp");
+			}
+		} catch (Exception e) {
+			System.out.println("obtener(): " + e.getMessage());
+		}
+	}
+	
+	protected void modificar(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			Libro libro = new Libro();
+			libro.setIdLibro(Integer.parseInt(request.getParameter("idlibro")));
+			libro.setNombre(request.getParameter("nombre"));
+			libro.setExistencias(Integer.parseInt(request.getParameter("existencias")));
+			libro.setPrecio(Double.parseDouble(request.getParameter("precio")));
+			libro.setAutor(request.getParameter("autor"));
+			libro.setEditorial(request.getParameter("editorial"));
+			libro.setGenero(request.getParameter("genero"));
+			libro.setDescripcion(request.getParameter("libro"));
+
+			if (librosModel.modificarLibro(libro) > 0) {
+				request.getSession().setAttribute("exito", "libro modificado");
+			} else {
+				request.getSession().setAttribute("fracaso", "libro NO modificado");
+			}
+			response.sendRedirect(request.getContextPath() + "/LibrosController?op=listar");
+		} catch (Exception e) {
+			System.out.println("Ocurren problemas en editar() en LibrosController" + e.getMessage());
+		}
+	}
+	
 	protected void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			int idlibro = Integer.parseInt(request.getParameter("idlibro"));
@@ -120,7 +163,6 @@ public class LibrosController extends HttpServlet {
 			} else {
 				request.getSession().setAttribute("fracaso", "libro NO eliminado");
 			}
-//			request.getRequestDispatcher("/LibrosController?op=listar").forward(request, response);
 			response.sendRedirect(request.getContextPath() + "/LibrosController?op=listar");
 		} catch (Exception e) {
 			System.out.println("eliminar(): " + e.getMessage());

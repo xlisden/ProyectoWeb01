@@ -20,9 +20,8 @@
 </head>
 <body>
 
-<div class="container">
 <%@ include file='/cabeceraMenu.jsp' %>
-
+<div class="container">
 	<%
 // 		String url = "http://localhost:8080/ProyectoWeb01/";
 		Editorial editorial = null;

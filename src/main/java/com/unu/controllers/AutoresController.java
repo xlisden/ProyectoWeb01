@@ -99,10 +99,14 @@ public class AutoresController extends HttpServlet {
 			if(request.getParameter("nombre").isEmpty()) {
 				listaErrores.add(Mensajes.AUTOR_NOMBRE_ERROR);
 				incorrecto = true;
+			}else {
+				request.setAttribute("nombre", request.getParameter("nombre"));
 			}
 			if(request.getParameter("nacionalidad").isEmpty()) {
 				listaErrores.add(Mensajes.AUTOR_NACIONALIDAD_ERROR);
 				incorrecto = true;
+			}else {
+				request.setAttribute("nacionalidad", request.getParameter("nacionalidad"));
 			}
 			request.setAttribute("respuesta", incorrecto);
 			request.setAttribute("listaErrorres", listaErrores);

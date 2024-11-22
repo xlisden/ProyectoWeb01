@@ -19,7 +19,7 @@
 	}
 	function editar(id) {
 		if(confirm("¿Desea editar el registro?") == true){
-			location.href = "LibrosController?op=editar&idlibro=" + id;
+			location.href = "LibrosController?op=obtener&idlibro=" + id;
 		}
 	}
 </script>

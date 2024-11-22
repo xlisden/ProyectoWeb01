@@ -110,7 +110,7 @@ public class EditorialesController extends HttpServlet {
 			
 			if(editorial != null) {
 				request.setAttribute("editorial", editorial);
-				request.getRequestDispatcher("/editoriales/editarEditoriales.jsp").forward(request, response);
+				request.getRequestDispatcher("/editoriales/editarEditorial.jsp").forward(request, response);
 			}else {
 				response.sendRedirect(request.getContextPath() + "/error404.jsp");
 			}

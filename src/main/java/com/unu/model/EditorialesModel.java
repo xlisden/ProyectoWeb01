@@ -81,7 +81,7 @@ public class EditorialesModel {
 				editorial.setTelefono(rs.getString("telefono"));
 			}
 		} catch (SQLException ex) {
-			System.out.println("Error en obtenerAutor() " + ex.getMessage());
+			System.out.println("Error en obtenerEditorial() " + ex.getMessage());
 		}
 		conexion = Conexion.cerrarConexion();
 		return editorial;
