@@ -7,9 +7,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
+//import java.util.Iterator;
 
 import com.unu.beans.Genero;
+import com.unu.beans.Libro;
 import com.unu.model.GenerosModel;
 
 @WebServlet(name = "GenerosController", urlPatterns = { "/GenerosController" })
@@ -42,6 +43,15 @@ public class GenerosController extends HttpServlet {
 				break;
 			case "insertar":
 				insertar(request, response);
+				break;
+			case "obtener":
+				obtener(request, response);
+				break;
+			case "modificar":
+				modificar(request, response);
+				break;
+			case "eliminar":
+				eliminar(request, response);
 				break;
 			}
 			
@@ -82,6 +92,55 @@ public class GenerosController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/GenerosController?op=listar");
 		} catch (Exception e) {
 			System.out.println("Error en insertar() en GenerosController: " + e.getMessage());
+		}
+	}
+	
+	protected void obtener(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			int idgenero = Integer.parseInt(request.getParameter("idgenero"));
+			Genero genero = generosModelo.obtenerGenero(idgenero);
+			if(genero != null) {
+				request.setAttribute("libro", genero);
+				request.getRequestDispatcher("/generos/editarGenero.jsp").forward(request, response);
+			}else {
+				System.out.println("obtener(): genero nulo");
+				response.sendRedirect(request.getContextPath() + "/error404.jsp");
+			}
+		} catch (Exception e) {
+			System.out.println("obtener(): " + e.getMessage());
+		}
+	}
+	
+	protected void modificar(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			Genero genero = new Genero();
+			genero.setIdgenero(Integer.parseInt(request.getParameter("idgenero")));
+			genero.setNombre(request.getParameter("nombre"));
+			genero.setDescripcion(request.getParameter("descripcion"));
+
+			if (generosModelo.modificarGenero(genero) > 0) {
+				request.getSession().setAttribute("exito", "genero modificado");
+			} else {
+				request.getSession().setAttribute("fracaso", "genero NO modificado");
+			}
+			response.sendRedirect(request.getContextPath() + "/GenerosController?op=listar");
+		} catch (Exception e) {
+			System.out.println("Ocurren problemas en modificar() en GenerosController" + e.getMessage());
+		}
+	}
+	
+	protected void eliminar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			int idgenero = Integer.parseInt(request.getParameter("idgenero"));
+			
+			if(generosModelo.eliminarGenero(idgenero) > 0) {
+				request.getSession().setAttribute("exito", "genero eliminado");
+			} else {
+				request.getSession().setAttribute("fracaso", "genero NO eliminado");
+			}
+			response.sendRedirect(request.getContextPath() + "/GenerosController?op=listar");
+		} catch (Exception e) {
+			System.out.println("eliminar(): " + e.getMessage());
 		}
 	}
 

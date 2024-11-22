@@ -22,19 +22,19 @@
 %>
 <div class="container">
 	<br>
-	<h3> Editar libro </h3>
+	<h3> Editar libro </h3> <p></p>
 	<div class="form-group">
 	<form role="form" action="<%=url %>LibrosController" method="POST">
 		<input type="hidden" name="op" value="modificar">
 		<input type="hidden" name="idlibro" value="<%= libro.getIdLibro() %>">
 		
-		<input type="text" name="nombre" value="<%= libro.getNombre() %>" > <p></p>
-		<input type="number" name="existencias" value="<%= libro.getExistencias() %>" > <p></p>
-		<input type="number" name="precio" value="<%= libro.getPrecio() %>" > <p></p>
-		<input type="text" name="autor" value="<%= libro.getAutor() %>" > <p></p>
-		<input type="text" name="editorial" value="<%= libro.getEditorial() %>" > <p></p>
-		<input type="text" name="genero" value="<%= libro.getGenero() %>" > <p></p>
-		<input type="text" name="descripcion" value="<%= libro.getDescripcion() %>" > <p></p>
+		<input type="text" name="nombre" value="<%= libro.getNombre() %>" class="form-control" > <p></p>
+		<input type="number" name="existencias" value="<%= libro.getExistencias() %>" class="form-control" > <p></p>
+		<input type="number" name="precio" value="<%= libro.getPrecio() %>" class="form-control" > <p></p>
+		<input type="text" name="autor" value="<%= libro.getAutor() %>" class="form-control" > <p></p>
+		<input type="text" name="editorial" value="<%= libro.getEditorial() %>" class="form-control" > <p></p>
+		<input type="text" name="genero" value="<%= libro.getGenero() %>" class="form-control" > <p></p>
+		<input type="text" name="descripcion" value="<%= libro.getDescripcion() %>" class="form-control" > <p></p>
 		<br>
 		<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary"> <p></p>
 		<a href="<%= url %>LibrosController?op=listar" class="btn btn-outline-primary"> Volver </a>

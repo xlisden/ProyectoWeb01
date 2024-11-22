@@ -38,7 +38,7 @@ CREATE TABLE `autor` (
 
 LOCK TABLES `autor` WRITE;
 /*!40000 ALTER TABLE `autor` DISABLE KEYS */;
-INSERT INTO `autor` VALUES (1,'Juanita Alcachofa','peruano'),(2,'Garcia Marquez','Argentina'),(3,'Borges','Argentina'),(4,'Allende','Chilena'),(13,'Joyo Mayes','Británica'),(15,'Lisa','Tailandesa'),(16,'fsfsf','sfss'),(17,'fsfsf','fafs4'),(18,'Autor uno','NacionalidadUno'),(19,'olalas','jerifj23');
+INSERT INTO `autor` VALUES (1,'Juanita Alcachofa','peruano'),(2,'Garcia Marquez','Argentina'),(3,'Borges','Argentina'),(4,'Allende','Chilena'),(13,'Joyo Mayes','Británica'),(15,'Lisa','Tailandesa'),(18,'Autor uno','NacionalidadUno'),(19,'olalas','jerifj23');
 /*!40000 ALTER TABLE `autor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +80,7 @@ CREATE TABLE `genero` (
   `nombre` varchar(40) DEFAULT NULL,
   `descripcion` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idgenero`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `genero` (
 
 LOCK TABLES `genero` WRITE;
 /*!40000 ALTER TABLE `genero` DISABLE KEYS */;
-INSERT INTO `genero` VALUES (17,'Terror','descripcion1'),(18,'Romance','descripcion2'),(19,'Novela','descripcion3'),(20,'Comedia','descripcion4'),(21,'Drama','descripcion5'),(22,'Genero de Prueba','Descripcion hambrienta'),(23,'generodos','genero dos pi');
+INSERT INTO `genero` VALUES (17,'Terror','descripcion1'),(18,'Romance','descripcion2'),(19,'Novela','descripcion3'),(20,'Comedia','descripcion4'),(21,'Drama','descripcion5'),(23,'generodos','genero dos pi'),(24,'genero nuevo','eer');
 /*!40000 ALTER TABLE `genero` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,7 +125,7 @@ CREATE TABLE `libro` (
 
 LOCK TABLES `libro` WRITE;
 /*!40000 ALTER TABLE `libro` DISABLE KEYS */;
-INSERT INTO `libro` VALUES (2,'libro6',6,6.00,13,5,18,'descripcion6'),(3,'Libro Primero',6,20.00,1,5,18,'Descripcion sobre un libro...'),(4,'Libro Segundo',83,49.00,4,1,21,'Descripcion sobre un libro...2'),(7,'Librouno',23,23.00,NULL,NULL,NULL,'Descripcion1');
+INSERT INTO `libro` VALUES (2,'Libro primero',20,22.00,13,5,18,'Libro sobre una editora...'),(3,'Libro segundo',12,10.00,13,4,19,'Libro sobre una novela'),(7,'Libro primero',20,22.00,13,5,18,NULL);
 /*!40000 ALTER TABLE `libro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -528,7 +528,7 @@ BEGIN
 	SET
 	`nombre` = nombre,
 	`descripcion` = descripcion
-	WHERE `idgenero` = idgenero;
+	WHERE `genero`.`idgenero` = idgenero;
 
 END ;;
 DELIMITER ;
@@ -551,9 +551,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `spModificarLibro`(
 	IN nombre VARCHAR(50),
 	IN existencias INT,
 	IN precio DECIMAL(10,2),
-	IN idautor INT,
-	IN ideditorial INT,
-	IN idgenero INT,
+	IN nomAutor VARCHAR(50),
+	IN nomEditorial VARCHAR(50),
+	IN nomGenero VARCHAR(50),
 	IN descripcion TEXT
 )
 BEGIN
@@ -583,7 +583,7 @@ BEGIN
 	`ideditorial` = @ideditorial,
 	`idgenero` = @idgenero,
 	`descripcion` = descripcion
-	WHERE `idlibro` = idlibro;
+	WHERE `libro`.`idlibro` = idlibro;
 
 END ;;
 DELIMITER ;
@@ -690,4 +690,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-22 12:05:18
+-- Dump completed on 2024-11-22 16:58:34

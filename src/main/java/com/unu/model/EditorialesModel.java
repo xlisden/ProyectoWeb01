@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.unu.beans.Autor;
 import com.unu.beans.Editorial;
 
 public class EditorialesModel {

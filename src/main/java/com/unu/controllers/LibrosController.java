@@ -121,7 +121,7 @@ public class LibrosController extends HttpServlet {
 			Libro libro = librosModel.obtenerLibro(idlibro);
 			if(libro != null) {
 				request.setAttribute("libro", libro);
-				request.getRequestDispatcher("/libros/editarLibro.jsp");
+				request.getRequestDispatcher("/libros/editarLibro.jsp").forward(request, response);
 			}else {
 				System.out.println("obtener(): libro nulo");
 				response.sendRedirect(request.getContextPath() + "/error404.jsp");
@@ -141,7 +141,7 @@ public class LibrosController extends HttpServlet {
 			libro.setAutor(request.getParameter("autor"));
 			libro.setEditorial(request.getParameter("editorial"));
 			libro.setGenero(request.getParameter("genero"));
-			libro.setDescripcion(request.getParameter("libro"));
+			libro.setDescripcion(request.getParameter("descripcion"));
 
 			if (librosModel.modificarLibro(libro) > 0) {
 				request.getSession().setAttribute("exito", "libro modificado");

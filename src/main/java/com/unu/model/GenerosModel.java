@@ -3,11 +3,13 @@ package com.unu.model;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.unu.beans.Genero;
+import com.unu.beans.Libro;
 
 public class GenerosModel {
 
@@ -39,6 +41,27 @@ public class GenerosModel {
 		}
 		return listaGeneros;
 	}
+	
+	public int insertarGenero(Genero genero) {
+		int filasAfectadas = 0;
+		try {
+			String sql = "CALL spInsertarGenero(?, ?);";
+			conexion = Conexion.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			
+			cs.setString(1, genero.getNombre());
+			cs.setString(2, genero.getDescripcion());
+			filasAfectadas = cs.executeUpdate();
+			
+			if(filasAfectadas == 0) {
+				System.out.println("genero NO insertado en model");
+			}
+			conexion = Conexion.cerrarConexion();
+		} catch (Exception e) {
+			System.out.println("insertarGenero() " + e.getMessage());
+		}
+		return filasAfectadas;
+	}
 
 	public Genero obtenerGenero(int idgenero) {
 		Genero genero = null;
@@ -63,28 +86,48 @@ public class GenerosModel {
 		return genero;
 	}
 
-	public int insertarGenero(Genero genero) {
+	public int modificarGenero(Genero genero) {
 		int filasAfectadas = 0;
 		try {
-			String sql = "CALL spInsertarGenero(?, ?);";
+			String sql = "CALL spModificarGenero(?, ?, ?)";
 			conexion = Conexion.abrirConexion();
 			cs = conexion.prepareCall(sql);
 			
-			cs.setString(1, genero.getNombre());
-			cs.setString(2, genero.getDescripcion());
+			cs.setInt(1, genero.getIdgenero());
+			cs.setString(2, genero.getNombre());
+			cs.setString(8, genero.getDescripcion());
 			filasAfectadas = cs.executeUpdate();
-			
-			if(filasAfectadas == 0) {
-				System.out.println("genero NO insertado en model");
+			if (filasAfectadas != 0) {
+				System.out.println("Genero correctamente modificado.");
 			}
+
 			conexion = Conexion.cerrarConexion();
-		} catch (Exception e) {
-			System.out.println("insertarGenero() " + e.getMessage());
+		} catch (SQLException ex) {
+			System.out.println("Error en modificarGenero() " + ex.getMessage());
+			conexion = Conexion.cerrarConexion();
 		}
 		return filasAfectadas;
 	}
 	
-
+	public int eliminarGenero(int idgenero) {
+		int filasAfectadas = 0;
+		try {
+			String sql = "CALL spEliminarGenero(?);";
+			conexion = Conexion.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			cs.setInt(1, idgenero);
+			filasAfectadas = cs.executeUpdate();
+			
+			if (filasAfectadas == 0) {
+				System.out.println("error al eliminar genero");
+			}
+			
+			conexion = Conexion.cerrarConexion();
+		} catch (Exception e) {
+			System.out.println("eliminarGenero(): " + e.getMessage());
+		}
+		return filasAfectadas;
+	}
 	
 	public List<String> listarNombresGeneros() {
 		List<String> generos = new ArrayList<>();

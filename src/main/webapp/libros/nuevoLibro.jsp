@@ -62,7 +62,7 @@
 					  }
 					  %>
 					</select>
-					<a href="<%=url%>GenerosController?op=nuevo" class="btn btn-outline-dark">Nuevo genero</a> <p></p>
+<%-- 					<a href="<%=url%>GenerosController?op=nuevo" class="btn btn-outline-dark">Nuevo genero</a> <p></p> --%>
 				</section>
 				<section class="section">
 					<select class="form-select" name="editorial" class="select"> 
@@ -77,7 +77,7 @@
 					  }
 					  %>
 					</select>
-					<a href="<%=url%>EditorialesController?op=nuevo" class="btn btn-outline-dark">Nueva editorial</a>  <p></p>
+<%-- 					<a href="<%=url%>EditorialesController?op=nuevo" class="btn btn-outline-dark">Nueva editorial</a>  <p></p> --%>
 				</section>
 				<section class="section">
 					<select class="form-select" name="autor" class="select">
@@ -92,7 +92,7 @@
 					  }
 					  %>
 					</select>
-					<a href="<%=url%>AutoresController?op=nuevo" class="btn btn-outline-dark" >Nuevo autor</a>  <p></p>
+<%-- 					<a href="<%=url%>AutoresController?op=nuevo" class="btn btn-outline-dark" >Nuevo autor</a>  <p></p> --%>
 				</section>
 				<input type="text" name="descripcion" id="descripcion" placeholder="Descripcion" class="form-control"> <p></p>
 				<br>
@@ -101,8 +101,6 @@
 			</form>
 		</div>
 		<br>
-		
-
 		
 
 	</div>	

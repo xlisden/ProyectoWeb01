@@ -4,20 +4,16 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.unu.beans.Libro;
 import com.unu.beans.Libro;
 
 public class LibrosModel {
 	
 	private CallableStatement cs;
 	private Connection conexion;
-	private ResultSet rs;
-	private Statement st;
-	
+	private ResultSet rs;	
 	public int insertarLibro(Libro libro) {
 		int filasAfectadas = 0;
 		try {
@@ -71,26 +67,6 @@ public class LibrosModel {
 		return listaLibros;
 	}
 	
-	public int eliminarLibro(int idlibro) {
-		int filasAfectadas = 0;
-		try {
-			String sql = "CALL spEliminarLibro(?);";
-			conexion = Conexion.abrirConexion();
-			cs = conexion.prepareCall(sql);
-			cs.setInt(1, idlibro);
-			filasAfectadas = cs.executeUpdate();
-			
-			if (filasAfectadas == 0) {
-				System.out.println("error al eliminar libro");
-			}
-			
-			conexion = Conexion.cerrarConexion();
-		} catch (Exception e) {
-			System.out.println("eliminarLibro(): " + e.getMessage());
-		}
-		return filasAfectadas;
-	}
-	
 	public Libro obtenerLibro(int idLibro) throws SQLException {
 		Libro libro = null;
 		try {
@@ -102,6 +78,7 @@ public class LibrosModel {
 
 			if (rs.next()) {
 				libro = new Libro();
+				libro.setIdLibro(rs.getInt("idlibro"));
 				libro.setNombre(rs.getString("nombre"));
 				libro.setExistencias(rs.getInt("existencias"));
 				libro.setPrecio(rs.getDouble("precio"));
@@ -144,5 +121,24 @@ public class LibrosModel {
 		}
 		return filasAfectadas;
 	}
-
+	
+	public int eliminarLibro(int idlibro) {
+		int filasAfectadas = 0;
+		try {
+			String sql = "CALL spEliminarLibro(?);";
+			conexion = Conexion.abrirConexion();
+			cs = conexion.prepareCall(sql);
+			cs.setInt(1, idlibro);
+			filasAfectadas = cs.executeUpdate();
+			
+			if (filasAfectadas == 0) {
+				System.out.println("error al eliminar libro");
+			}
+			
+			conexion = Conexion.cerrarConexion();
+		} catch (Exception e) {
+			System.out.println("eliminarLibro(): " + e.getMessage());
+		}
+		return filasAfectadas;
+	}
 }
