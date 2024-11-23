@@ -59,7 +59,6 @@ public class AutoresController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
 		try {
 			processRequest(request, response);
 		} catch (Exception e) {
@@ -69,7 +68,6 @@ public class AutoresController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-//		doGet(request, response);
 		try {
 			processRequest(request, response);
 		} catch (Exception e) {
@@ -93,27 +91,44 @@ public class AutoresController extends HttpServlet {
 	}
 	
 	private boolean validar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		boolean incorrecto = false;
+		boolean hayErrores = false;
 		List<String> listaErrores = new ArrayList<String>();
 		try {
-			if(request.getParameter("nombre").isEmpty()) {
-				listaErrores.add(Mensajes.AUTOR_NOMBRE_ERROR);
-				incorrecto = true;
-			}else {
-				request.setAttribute("nombre", request.getParameter("nombre"));
+			validarParametro(request, response, "nombre", listaErrores, Mensajes.AUTOR_NOMBRE_ERROR);
+			validarParametro(request, response, "nacionalidad", listaErrores, Mensajes.AUTOR_NACIONALIDAD_ERROR);
+			if(listaErrores.size() > 0) {
+				hayErrores  = true;
 			}
-			if(request.getParameter("nacionalidad").isEmpty()) {
-				listaErrores.add(Mensajes.AUTOR_NACIONALIDAD_ERROR);
-				incorrecto = true;
-			}else {
-				request.setAttribute("nacionalidad", request.getParameter("nacionalidad"));
-			}
-			request.setAttribute("respuesta", incorrecto);
-			request.setAttribute("listaErrorres", listaErrores);
+			request.setAttribute("respuesta", hayErrores);
+			request.setAttribute("listaErrores", listaErrores);
 		} catch (Exception e) {
 			System.out.println("validar(): " + e.getMessage());
 		}
-		return incorrecto;
+		return hayErrores;
+	}
+	
+	private void validarParametro(HttpServletRequest request, HttpServletResponse response, String parametro, List<String> listaErrores, String mensaje) throws ServletException, IOException {
+		try {
+			String aux = request.getParameter(parametro);
+			if(aux == null || aux.isEmpty()) {
+				listaErrores.add(mensaje);
+				request.setAttribute(parametro, null);
+			}else {
+				request.setAttribute(parametro, request.getParameter(parametro));
+			}
+		} catch (Exception e) {
+			System.out.println("validarParametro() " + e.getMessage());
+		}
+//		String aux = request.getParameter(parametro);
+//		if(aux == null) {
+//			listaErrores.add(mensaje);
+//			request.setAttribute(parametro, null);
+//		}else if(aux.isEmpty()){
+//			listaErrores.add(mensaje);
+//			request.setAttribute(parametro, null);
+//		}else {
+//			request.setAttribute(parametro, request.getParameter(parametro));
+//		}
 	}
 
 	private void insertar(HttpServletRequest request, HttpServletResponse response) {
@@ -124,25 +139,26 @@ public class AutoresController extends HttpServlet {
 				autor.setNacionalidad(request.getParameter("nacionalidad"));
 
 				if (modelo.insertarAutor(autor) > 0) {
-					request.getSession().setAttribute("exito", "Autor creado exitosamente");
+					request.getSession().setAttribute("exito", "autor creado");
 				} else {
-					request.getSession().setAttribute("fracaso", "El autor no se ha creado");
+					request.getSession().setAttribute("fracaso", "autor NO creado");
 				}
 				response.sendRedirect(request.getContextPath() + "/AutoresController?op=listar");
 			}else {
 				request.getRequestDispatcher("/autores/nuevoAutor.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
-			System.out.println("Ocurren problemas en insertar() en AutoresController" + e.getMessage());
+			System.out.println("insertar() " + e.getMessage());
 		}
 	}
 
 	private void obtener(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("entro a obtener");
 		try {
 			if(!validar(request, response)) {
+				System.out.println("dentro del ig");
 				int idautor = Integer.parseInt(request.getParameter("idautor"));
 				Autor autor = modelo.obtenerAutor(idautor);
-				System.out.println("Autor en obtener: " + autor.getIdAutor() + " " + autor.getNombre());
 				
 				if (autor != null) {
 					request.setAttribute("autor", autor);
@@ -150,30 +166,32 @@ public class AutoresController extends HttpServlet {
 				} else {
 					response.sendRedirect(request.getContextPath() + "/error404.jsp");
 				}
-
 			}
-
 		} catch (Exception e) {
-			System.out.println("Ocurren problemas en obtener() en AutoresController" + e.getMessage());
+			System.out.println("obtener() " + e.getMessage());
 		}
 	}
 
 	private void modificar(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			Autor autor = new Autor();
-			autor.setIdAutor(Integer.parseInt(request.getParameter("idautor")));
-			autor.setNombre(request.getParameter("nombre"));
-			autor.setNacionalidad(request.getParameter("nacionalidad"));
-			request.setAttribute("autor", autor);
+			if(!validar(request, response)) {
+				Autor autor = new Autor();
+				autor.setIdAutor(Integer.parseInt(request.getParameter("idautor")));
+				autor.setNombre(request.getParameter("nombre"));
+				autor.setNacionalidad(request.getParameter("nacionalidad"));
+				request.setAttribute("autor", autor);
 
-			if (modelo.modificarAutor(autor) > 0) {
-				request.getSession().setAttribute("exito", "Autor modificado exitosamente");
-			} else {
-				request.getSession().setAttribute("fracaso", "El autor no se ha modificado");
+				if (modelo.modificarAutor(autor) > 0) {
+					request.getSession().setAttribute("exito", "autor modificado ");
+				} else {
+					request.getSession().setAttribute("fracaso", "autor NO modificado");
+				}
+				response.sendRedirect(request.getContextPath() + "/AutoresController?op=listar");
+			}else {
+				request.getRequestDispatcher("/autores/editarAutor.jsp").forward(request, response);
 			}
-			response.sendRedirect(request.getContextPath() + "/AutoresController?op=listar");
 		} catch (Exception e) {
-			System.out.println("Ocurren problemas en modificar() en AutoresController" + e.getMessage());
+			System.out.println("modificar() " + e.getMessage());
 		}
 	}
 

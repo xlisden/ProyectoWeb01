@@ -111,7 +111,7 @@ public class LibrosController extends HttpServlet {
 			}
 			response.sendRedirect(request.getContextPath() + "/LibrosController?op=listar");
 		} catch (Exception e) {
-			System.out.println("Ocurren problemas en insertar() en LibrosController " + e.getMessage());
+			System.out.println("insertar() " + e.getMessage());
 		}
 	}
 	
@@ -119,6 +119,9 @@ public class LibrosController extends HttpServlet {
 		try {
 			int idlibro = Integer.parseInt(request.getParameter("idlibro"));
 			Libro libro = librosModel.obtenerLibro(idlibro);
+			request.setAttribute("nombresEditoriales", editorialesModel.listarNombresEditoriales());
+			request.setAttribute("nombresGeneros", generosModel.listarNombresGeneros());
+			request.setAttribute("nombresAutores", autoresModel.listarNombresAutores());
 			if(libro != null) {
 				request.setAttribute("libro", libro);
 				request.getRequestDispatcher("/libros/editarLibro.jsp").forward(request, response);

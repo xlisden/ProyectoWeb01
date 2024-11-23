@@ -8,10 +8,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 //import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.unu.beans.Genero;
 import com.unu.beans.Libro;
 import com.unu.model.GenerosModel;
+import com.unu.model.Mensajes;
 
 @WebServlet(name = "GenerosController", urlPatterns = { "/GenerosController" })
 public class GenerosController extends HttpServlet {
@@ -78,6 +81,31 @@ public class GenerosController extends HttpServlet {
 		}
 	}
 	
+	private boolean validar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		boolean hayErrores = false;
+		List<String> listaErrores = new ArrayList<String>();
+		try {
+			hayErrores = validarParametro(request, response, "nombre", listaErrores, Mensajes.GENERO_NOMBRE_ERROR);
+			hayErrores = validarParametro(request, response, "descripcion", listaErrores, Mensajes.GENERO_DESCRIPCION_ERROR);
+			request.setAttribute("respuesta", hayErrores);
+			request.setAttribute("listaErrores", listaErrores);
+		} catch (Exception e) {
+			System.out.println("validar(): " + e.getMessage());
+		}
+		return hayErrores;
+	}
+	
+	private boolean validarParametro(HttpServletRequest request, HttpServletResponse response, String parametro, List<String> listaErrores, String mensaje) throws ServletException, IOException {
+		String aux = request.getParameter(parametro);
+		if(aux.isEmpty() || aux == null) {
+			listaErrores.add(mensaje);
+			return true;
+		}else {
+			request.setAttribute(parametro, request.getParameter(parametro));
+			return false;
+		}
+	}
+	
 	protected void insertar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Genero genero = new Genero();
@@ -100,7 +128,7 @@ public class GenerosController extends HttpServlet {
 			int idgenero = Integer.parseInt(request.getParameter("idgenero"));
 			Genero genero = generosModelo.obtenerGenero(idgenero);
 			if(genero != null) {
-				request.setAttribute("libro", genero);
+				request.setAttribute("genero", genero);
 				request.getRequestDispatcher("/generos/editarGenero.jsp").forward(request, response);
 			}else {
 				System.out.println("obtener(): genero nulo");

@@ -7,11 +7,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import com.unu.beans.Autor;
 import com.unu.beans.Editorial;
 import com.unu.model.EditorialesModel;
+import com.unu.model.Mensajes;
 
 @WebServlet(name = "EditorialesController", urlPatterns = { "/EditorialesController" })
 public class EditorialesController extends HttpServlet {
@@ -59,13 +62,11 @@ public class EditorialesController extends HttpServlet {
 
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		processRequest(request, response);
 	}
 
@@ -83,20 +84,50 @@ public class EditorialesController extends HttpServlet {
 			System.out.println("Error en listar() " + e.getMessage());
 		}
 	}
-
+	
+	private boolean validar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		boolean hayErrores = false;
+		List<String> listaErrores = new ArrayList<String>();
+		try {
+			hayErrores = validarParametro(request, response, "nombre", listaErrores, Mensajes.EDITORIAL_NOMBRE_ERROR);
+			hayErrores = validarParametro(request, response, "contacto", listaErrores, Mensajes.EDITORIAL_CONTACTO_ERROR);
+			hayErrores = validarParametro(request, response, "telefono", listaErrores, Mensajes.EDITORIAL_TELEFONO_ERROR);
+			request.setAttribute("respuesta", hayErrores);
+			request.setAttribute("listaErrores", listaErrores);
+		} catch (Exception e) {
+			System.out.println("validar(): " + e.getMessage());
+		}
+		return hayErrores;
+	}
+	
+	private boolean validarParametro(HttpServletRequest request, HttpServletResponse response, String parametro, List<String> listaErrores, String mensaje) throws ServletException, IOException {
+		String aux = request.getParameter(parametro);
+		if(aux.isEmpty() || aux == null) {
+			listaErrores.add(mensaje);
+			return true;
+		}else {
+			request.setAttribute(parametro, request.getParameter(parametro));
+			return false;
+		}
+	}
+	
 	private void insertar(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			Editorial editorial = new Editorial();
-			editorial.setNombre(request.getParameter("nombre"));
-			editorial.setContacto(request.getParameter("contacto"));
-			editorial.setTelefono(request.getParameter("telefono"));
+			if(!validar(request, response)) {
+				Editorial editorial = new Editorial();
+				editorial.setNombre(request.getParameter("nombre"));
+				editorial.setContacto(request.getParameter("contacto"));
+				editorial.setTelefono(request.getParameter("telefono"));
 
-			if (modelo.insertarEditorial(editorial) > 0) {
-				request.getSession().setAttribute("exito", "Editorial creada exitosamente");
-			} else {
-				request.getSession().setAttribute("fracaso", "La editorial no se ha creado");
+				if (modelo.insertarEditorial(editorial) > 0) {
+					request.getSession().setAttribute("exito", "Editorial creada exitosamente");
+				} else {
+					request.getSession().setAttribute("fracaso", "La editorial no se ha creado");
+				}
+				response.sendRedirect(request.getContextPath() + "/EditorialesController?op=listar");
+			}else {
+				request.getRequestDispatcher("/editoriales/nuevaEditorial.jsp").forward(request, response);
 			}
-			response.sendRedirect(request.getContextPath() + "/EditorialesController?op=listar");
 		} catch (Exception e) {
 			System.out.println("Ocurren problemas en insertar() en EditorialesController" + e.getMessage());
 		}
@@ -121,18 +152,22 @@ public class EditorialesController extends HttpServlet {
 
 	private void modificar(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			Editorial editorial = new Editorial();
-			editorial.setIdeditorial(Integer.parseInt(request.getParameter("ideditorial")));
-			editorial.setNombre(request.getParameter("nombre"));
-			editorial.setContacto(request.getParameter("contacto"));
-			editorial.setTelefono(request.getParameter("telefono"));
+			if(!validar(request, response)) {
+				Editorial editorial = new Editorial();
+				editorial.setIdeditorial(Integer.parseInt(request.getParameter("ideditorial")));
+				editorial.setNombre(request.getParameter("nombre"));
+				editorial.setContacto(request.getParameter("contacto"));
+				editorial.setTelefono(request.getParameter("telefono"));
 
-			if (modelo.modificarEditorial(editorial) > 0) {
-				request.getSession().setAttribute("exito", "Editorial creada exitosamente");
-			} else {
-				request.getSession().setAttribute("fracaso", "La editorial no se ha creado");
+				if (modelo.modificarEditorial(editorial) > 0) {
+					request.getSession().setAttribute("exito", "Editorial creada exitosamente");
+				} else {
+					request.getSession().setAttribute("fracaso", "La editorial no se ha creado");
+				}
+				response.sendRedirect(request.getContextPath() + "/EditorialesController?op=listar");
+			}else {
+				request.getRequestDispatcher("/editoriales/editarEditorial.jsp").forward(request, response);
 			}
-			response.sendRedirect(request.getContextPath() + "/EditorialesController?op=listar");
 		} catch (Exception e) {
 			System.out.println("Ocurren problemas en insertar() en EditorialesController" + e.getMessage());
 		}

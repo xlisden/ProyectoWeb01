@@ -9,7 +9,8 @@ public class Conexion {
 	private static String url = "jdbc:mysql://localhost:3366/bibliotecapoo2";
 	private static String user = "root";
 	private static String password = "123456";
-	protected static Connection conexion;
+	protected static Connection conexion = null;
+	
 
 	public static Connection abrirConexion() {
 		try {

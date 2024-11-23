@@ -6,21 +6,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Editar autor</title>
-
-<link rel="stylesheet"
-		href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <script src="assets/js/bootstrap.min/js"></script>
-<!--  <link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-	crossorigin="anonymous">
- -->
- 
+ <script>
+	function validar() {
+		let resp = true;
+		resp = validarCampo('nombre', 'Ingrese el nombre del autor.') && resp;
+		resp = validarCampo('nacionalidad', 'Ingrese la nacionalidad del autor.') && resp;
+
+		return resp;
+	}
+ 	function validarCampo(parametro, mensaje){
+ 		let value = true;
+ 		const aux = document.getElementById(parametro).value.trim();
+ 		if(aux == '' || aux == null){
+ 			alert(mensaje);
+ 			document.getElementById(parametro).focus();
+ 			value = false;
+ 		}
+ 		return value;
+ 	}
+</script>
 </head>
 <body>
-	<%
-// 	String url = "http://localhost:8080/ProyectoWeb01/";
+
+<%
 	Autor autor;
 	HttpSession sesion = request.getSession();
 
@@ -28,32 +38,34 @@
 		autor = new Autor();
 	} else {
 		autor = (Autor) request.getAttribute("autor");
-// 		System.out.println("Autor: " + autor.getNombre() + " " + autor.getNacionalidad());
 	}
-	%>
-
-<div class="container">
+%>
+<% 
+	String nombre = (String) request.getAttribute("nombre"); 
+	System.out.println((nombre==null)? "nombre null" : nombre+"!!");
+	String nacionalidad = (String) request.getAttribute("nacionalidad");
+	System.out.println((nacionalidad==null)? "nacionalidad null" : nacionalidad+"!!!");
+%>
 
 <%@ include file='/cabeceraMenu.jsp' %>
-	
-		<h3>Editar autor</h3>
-		<br>
-	
-	
+<div class="container">
+	<br>	
+	<h3>Editar autor</h3> <p></p>
 	<div class="form-group">
-		<form role="form" action="<%=url %>AutoresController" method="POST">
+	<form role="form" action="<%=url %>AutoresController" method="POST" onsubmit="return validar()">
 		<input type="hidden" name="op" value="modificar">
-		<input type="hidden" name="idautor" value="<%=autor.getIdAutor()%>" / class="form-control">
-
-		<input type="text" name="nombre" id="nombre" value="<%=autor.getNombre() %>" class="form-control">
-		<input type="text" name="nacionalidad" id="nacionalidad" value="<%=autor.getNacionalidad() %>" class="form-control">
+		<input type="hidden" name="idautor" value="<%=autor.getIdAutor()%>" / class="form-control"> 
+<%-- <input type="text" class="form-control" name="nombre"  <%= (nombre == null) ? "placeholder='Nombre del autor'" : "value='" + nombre + "'" %> required="required" > --%>
+		<input type="text" name="nombre" value="<%= (nombre == null) ? autor.getNombre() : nombre %>" class="form-control" > <p></p>
+		<input type="text" name="nacionalidad" value="<%= (nacionalidad == null) ? autor.getNacionalidad() : nacionalidad %>" class="form-control" > <p></p>
 		
-		<br><p>   </p>
+		<br>
 		<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
-		<a href="<%=url%>AutoresController?op=listar" type="button"
-		class="btn btn-outline-primary"> Volver </a>
+		<a href="<%=url%>AutoresController?op=listar" class="btn btn-outline-primary"> Volver </a>
 	</form>
 	</div>
 </div>
+
 </body>
+
 </html>

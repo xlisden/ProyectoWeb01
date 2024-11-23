@@ -14,6 +14,7 @@ public class LibrosModel {
 	private CallableStatement cs;
 	private Connection conexion;
 	private ResultSet rs;	
+	
 	public int insertarLibro(Libro libro) {
 		int filasAfectadas = 0;
 		try {
@@ -32,7 +33,7 @@ public class LibrosModel {
 				System.out.println("Insertado libro" + libro.getNombre() + libro.getPrecio());
 			}
 		} catch (SQLException ex) {
-			System.out.println("Error en insertarLibro() " + ex.getMessage());
+			System.out.println("insertarLibro() " + ex.getMessage());
 		}
 		conexion = Conexion.cerrarConexion();
 		return filasAfectadas;
@@ -62,7 +63,7 @@ public class LibrosModel {
 
 			conexion = Conexion.cerrarConexion();
 		} catch (Exception e) {
-			System.out.println("Error en listarLibros() " + e.getMessage());
+			System.out.println("listarLibros() " + e.getMessage());
 		}
 		return listaLibros;
 	}
@@ -88,7 +89,7 @@ public class LibrosModel {
 				libro.setDescripcion(rs.getString("descripcion"));
 			}
 		} catch (SQLException ex) {
-			System.out.println("Error en obtenerLibro() " + ex.getMessage());
+			System.out.println("obtenerLibro() " + ex.getMessage());
 		}
 		conexion = Conexion.cerrarConexion();
 		return libro;
@@ -116,7 +117,7 @@ public class LibrosModel {
 
 			conexion = Conexion.cerrarConexion();
 		} catch (SQLException ex) {
-			System.out.println("Error en modificarLibro() " + ex.getMessage());
+			System.out.println("modificarLibro() " + ex.getMessage());
 			conexion = Conexion.cerrarConexion();
 		}
 		return filasAfectadas;

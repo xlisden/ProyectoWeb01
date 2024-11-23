@@ -32,7 +32,7 @@
 		<input type="text" name="nombre" value="<%= genero.getNombre() %>" class="form-control" > <p></p>
 		<input type="text" name="descripcion" value="<%= genero.getDescripcion() %>" class="form-control" > <p></p>
 		<br>
-		<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary"> <p></p>
+		<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
 		<a href="<%= url %>GenerosController?op=listar" class="btn btn-outline-primary"> Volver </a>
 	</form>
 	</div>

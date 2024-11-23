@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.unu.beans.Genero;
-import com.unu.beans.Libro;
 
 public class GenerosModel {
 
@@ -37,7 +36,7 @@ public class GenerosModel {
 
 			conexion = Conexion.cerrarConexion();
 		} catch (Exception e) {
-			System.out.println("Error en listarGeneros() " + e.getMessage());
+			System.out.println("listarGeneros() " + e.getMessage());
 		}
 		return listaGeneros;
 	}
@@ -81,7 +80,7 @@ public class GenerosModel {
 
 			conexion = Conexion.cerrarConexion();
 		} catch (Exception e) {
-			System.out.println("Error en obtenerGenero() " + e.getMessage());
+			System.out.println("obtenerGenero() " + e.getMessage());
 		}
 		return genero;
 	}
@@ -103,7 +102,7 @@ public class GenerosModel {
 
 			conexion = Conexion.cerrarConexion();
 		} catch (SQLException ex) {
-			System.out.println("Error en modificarGenero() " + ex.getMessage());
+			System.out.println("modificarGenero() " + ex.getMessage());
 			conexion = Conexion.cerrarConexion();
 		}
 		return filasAfectadas;
@@ -124,7 +123,7 @@ public class GenerosModel {
 			
 			conexion = Conexion.cerrarConexion();
 		} catch (Exception e) {
-			System.out.println("eliminarGenero(): " + e.getMessage());
+			System.out.println("eliminarGenero() " + e.getMessage());
 		}
 		return filasAfectadas;
 	}
@@ -139,12 +138,11 @@ public class GenerosModel {
 
 			while (rs.next()) {
 				generos.add(rs.getString(1));
-//				System.out.println(rs.getString(1));
 			}
 
 			conexion = Conexion.cerrarConexion();
 		} catch (Exception e) {
-			System.out.println("Error en listarNombresGeneros() " + e.getMessage());
+			System.out.println("listarNombresGeneros() " + e.getMessage());
 		}
 		return generos;
 	}

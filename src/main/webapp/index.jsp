@@ -43,5 +43,5 @@
 <%-- 	<%@ include file='/cabecera.jsp' %> --%>
 	<%@ include file='/cabeceraMenu.jsp' %>
 
-</body>`
+</body>
 </html>

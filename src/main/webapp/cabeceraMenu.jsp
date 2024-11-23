@@ -15,23 +15,27 @@
 <!-- <div class="container"> -->
 <nav  class="navbar navbar-expand-lg" style="background-color: #1f1f1e;" data-bs-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="<%=url%>">   Biblioteca </a>
+    <a class="navbar-brand" href="<%=url%>">
+<!--     <link rel="stylesheet" href="assets/css/bootstrap.min.css"> -->
+    	<img src="images/notebook.png" alt="Logo" class="d-inline-block align-text-top"  height="30" width="24">
+    	   Biblioteca   
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<%=url%>AutoresController?op=listar">Autor</a>
+          <a class="nav-link" href="<%=url%>AutoresController?op=listar"> Autor </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<%=url%>EditorialesController?op=listar">Editorial</a>
+          <a class="nav-link" href="<%=url%>EditorialesController?op=listar"> Editorial </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<%=url%>GenerosController?op=listar">Genero</a>
+          <a class="nav-link" href="<%=url%>GenerosController?op=listar"> Genero </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<%=url%>LibrosController?op=listar">Libro</a>
+          <a class="nav-link" href="<%=url%>LibrosController?op=listar"> Libro </a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -39,9 +43,9 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="<%=url%>AutoresController?op=listar">Por Autor</a></li>
-            <li><a class="dropdown-item" href="<%=url%>LibrosController?op=listar">Por Libro</a></li>
             <li><a class="dropdown-item" href="<%=url%>EditorialesController?op=listar">Por Editorial</a></li>
             <li><a class="dropdown-item" href="<%=url%>GenerosController?op=listar">Por Genero</a></li>
+            <li><a class="dropdown-item" href="<%=url%>LibrosController?op=listar">Por Libro</a></li>
           </ul>
         </li>
       </ul>

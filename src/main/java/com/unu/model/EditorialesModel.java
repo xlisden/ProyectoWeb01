@@ -140,12 +140,11 @@ public class EditorialesModel {
 			
 			while(rs.next()) {
 				editoriales.add(rs.getString(1));
-//				System.out.println(rs.getString(1));
 			}
 			
 			conexion = Conexion.cerrarConexion();
 		} catch (Exception e) {
-			System.out.println("Error en listarNombresEditoriales() " + e.getMessage());
+			System.out.println("listarNombresEditoriales() " + e.getMessage());
 		}
 		return editoriales;
 	}	

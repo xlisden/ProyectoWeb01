@@ -32,23 +32,21 @@
 
 </head>
 <body>
-<%@ include file='/cabeceraMenu.jsp' %>
+<% List<String> listaGeneros = (List<String>) request.getAttribute("nombresGeneros"); %>
+<% List<String> listaEditoriales = (List<String>) request.getAttribute("nombresEditoriales"); %>
+<% List<String> listaAutores = (List<String>) request.getAttribute("nombresAutores"); %>
 
-<%-- 	<% String url = "http://localhost:8080/ProyectoWeb01/"; %> --%>
-	<% List<String> listaGeneros = (List<String>) request.getAttribute("nombresGeneros"); %>
-	<% List<String> listaEditoriales = (List<String>) request.getAttribute("nombresEditoriales"); %>
-	<% List<String> listaAutores = (List<String>) request.getAttribute("nombresAutores"); %>
-	
-	<div class="container">
+<%@ include file='/cabeceraMenu.jsp' %>
+<div class="container">
+
 		<br>
-		<h3>Insertar libro</h3>
+		<h3>Insertar libro</h3> <p></p>
 		<div class="form-group">
 			<form role="form" action="<%=url%>LibrosController" method="POST">
 				<input type="hidden" name="op" value="insertar"> <p></p>
 				<input type="text" name="nombre" placeholder="Nombre" class="form-control">  <p></p>
 				<input type="number" name="existencias" placeholder="Nro de existencias" class="form-control"> <p></p>
 				<input type="number" name="precio" placeholder="Precio" class="form-control"> <p></p>
-<!-- 				 aria-label="Default select example" -->
 				<section class="section">
 					<select class="form-select" name="genero" class="select">
 					  <option selected>Generos</option>
