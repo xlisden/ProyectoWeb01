@@ -7,8 +7,8 @@
 <meta charset="UTF-8">
 <title>Editar autor</title>
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-<script src="assets/js/bootstrap.min/js"></script>
- <script>
+<!-- <script src="assets/js/bootstrap.min/js"></script> -->
+<script>
 	function validar() {
 		let resp = true;
 		resp = validarCampo('nombre', 'Ingrese el nombre del autor.') && resp;
@@ -19,7 +19,7 @@
  	function validarCampo(parametro, mensaje){
  		let value = true;
  		const aux = document.getElementById(parametro).value.trim();
- 		if(aux == '' || aux == null){
+ 		if(aux == null || aux == ''){
  			alert(mensaje);
  			document.getElementById(parametro).focus();
  			value = false;
@@ -33,7 +33,6 @@
 <%
 	Autor autor;
 	HttpSession sesion = request.getSession();
-
 	if (request.getAttribute("autor") == null) {
 		autor = new Autor();
 	} else {
@@ -54,11 +53,9 @@
 	<div class="form-group">
 	<form role="form" action="<%=url %>AutoresController" method="POST" onsubmit="return validar()">
 		<input type="hidden" name="op" value="modificar">
-		<input type="hidden" name="idautor" value="<%=autor.getIdAutor()%>" / class="form-control"> 
-<%-- <input type="text" class="form-control" name="nombre"  <%= (nombre == null) ? "placeholder='Nombre del autor'" : "value='" + nombre + "'" %> required="required" > --%>
-		<input type="text" name="nombre" value="<%= (nombre == null) ? autor.getNombre() : nombre %>" class="form-control" > <p></p>
-		<input type="text" name="nacionalidad" value="<%= (nacionalidad == null) ? autor.getNacionalidad() : nacionalidad %>" class="form-control" > <p></p>
-		
+		<input type="hidden" name="idautor" value="<%=autor.getIdAutor()%>" > 
+		<input type="text" name="nombre" value="<%= (nombre == null) ? autor.getNombre() : nombre %>" class="form-control" id="nombre"> <p></p>
+		<input type="text" name="nacionalidad" value="<%= (nacionalidad == null) ? autor.getNacionalidad() : nacionalidad %>" class="form-control" id="nacionalidad"> <p></p>
 		<br>
 		<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
 		<a href="<%=url%>AutoresController?op=listar" class="btn btn-outline-primary"> Volver </a>

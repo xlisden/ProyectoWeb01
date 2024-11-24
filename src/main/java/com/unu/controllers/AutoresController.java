@@ -153,10 +153,8 @@ public class AutoresController extends HttpServlet {
 	}
 
 	private void obtener(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("entro a obtener");
 		try {
-			if(!validar(request, response)) {
-				System.out.println("dentro del ig");
+//			if(!validar(request, response)) {
 				int idautor = Integer.parseInt(request.getParameter("idautor"));
 				Autor autor = modelo.obtenerAutor(idautor);
 				
@@ -166,7 +164,7 @@ public class AutoresController extends HttpServlet {
 				} else {
 					response.sendRedirect(request.getContextPath() + "/error404.jsp");
 				}
-			}
+//			}
 		} catch (Exception e) {
 			System.out.println("obtener() " + e.getMessage());
 		}

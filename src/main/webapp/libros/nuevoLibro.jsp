@@ -39,27 +39,27 @@
 <%@ include file='/cabeceraMenu.jsp' %>
 <div class="container">
 
-		<br>
-		<h3>Insertar libro</h3> <p></p>
-		<div class="form-group">
-			<form role="form" action="<%=url%>LibrosController" method="POST">
-				<input type="hidden" name="op" value="insertar"> <p></p>
-				<input type="text" name="nombre" placeholder="Nombre" class="form-control">  <p></p>
-				<input type="number" name="existencias" placeholder="Nro de existencias" class="form-control"> <p></p>
-				<input type="number" name="precio" placeholder="Precio" class="form-control"> <p></p>
-				<section class="section">
-					<select class="form-select" name="genero" class="select">
-					  <option selected>Generos</option>
+	<br>
+	<h3>Insertar libro</h3> <p></p>
+	<div class="form-group">
+		<form role="form" action="<%=url%>LibrosController" method="POST">
+			<input type="hidden" name="op" value="insertar"> <p></p>
+			<input type="text" name="nombre" placeholder="Nombre" class="form-control">  <p></p>
+			<input type="number" name="existencias" placeholder="Nro de existencias" class="form-control"> <p></p>
+			<input type="number" name="precio" placeholder="Precio" class="form-control"> <p></p>
+			<section class="section">
+				<select class="form-select" name="genero" class="select">
+					<option selected>Generos</option>
 					  <%
 					  if(listaGeneros != null){
 						  for(int i=0; i<listaGeneros.size(); i++){
 					  %>
-					 	 <option><%= listaGeneros.get(i) %></option>
+					<option><%= listaGeneros.get(i) %></option>
 					  <%
 						  }
 					  }
 					  %>
-					</select>
+				</select>
 <%-- 					<a href="<%=url%>GenerosController?op=nuevo" class="btn btn-outline-dark">Nuevo genero</a> <p></p> --%>
 				</section>
 				<section class="section">
