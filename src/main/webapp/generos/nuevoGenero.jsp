@@ -19,8 +19,8 @@
 		<br>
 		<input type="hidden" name="op" value="insertar">
 		
-		<input type="text" name="nombre" placeholder="Nombre" class="form-control"> <p></p>
-		<input type="text" name="descripcion" placeholder="Descripcion" class="form-control"> <p></p>
+		<input type="text" name="nombre" placeholder="Nombre" pattern="[A-Za-zÑñáéíóúÁÉÍÓÚ\s]+"  class="form-control"> <p></p>
+		<input type="text" name="descripcion" placeholder="Descripcion" pattern="[A-Za-zÑñáéíóúÁÉÍÓÚ\s]+" class="form-control"> <p></p>
 		<br>
 		<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
 		<a href="<%=url%>GenerosController?op=listar" class="btn btn-outline-primary"> Volver </a>

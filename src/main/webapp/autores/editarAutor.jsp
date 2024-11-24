@@ -54,8 +54,8 @@
 	<form role="form" action="<%=url %>AutoresController" method="POST" onsubmit="return validar()">
 		<input type="hidden" name="op" value="modificar">
 		<input type="hidden" name="idautor" value="<%=autor.getIdAutor()%>" > 
-		<input type="text" name="nombre" value="<%= (nombre == null) ? autor.getNombre() : nombre %>" class="form-control" id="nombre"> <p></p>
-		<input type="text" name="nacionalidad" value="<%= (nacionalidad == null) ? autor.getNacionalidad() : nacionalidad %>" class="form-control" id="nacionalidad"> <p></p>
+		<input type="text" name="nombre" value="<%= (nombre == null) ? autor.getNombre() : nombre %>" pattern="[A-Za-zÑñáéíóúÁÉÍÓÚ\s]+" id="nombre" class="form-control" > <p></p>
+		<input type="text" name="nacionalidad" value="<%= (nacionalidad == null) ? autor.getNacionalidad() : nacionalidad %>" pattern="[A-Za-zÑñáéíóúÁÉÍÓÚ\s]+" id="nacionalidad" class="form-control" > <p></p>
 		<br>
 		<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
 		<a href="<%=url%>AutoresController?op=listar" class="btn btn-outline-primary"> Volver </a>

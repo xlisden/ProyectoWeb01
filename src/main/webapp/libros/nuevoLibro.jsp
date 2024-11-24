@@ -44,9 +44,9 @@
 	<div class="form-group">
 		<form role="form" action="<%=url%>LibrosController" method="POST">
 			<input type="hidden" name="op" value="insertar"> <p></p>
-			<input type="text" name="nombre" placeholder="Nombre" class="form-control">  <p></p>
-			<input type="number" name="existencias" placeholder="Nro de existencias" class="form-control"> <p></p>
-			<input type="number" name="precio" placeholder="Precio" class="form-control"> <p></p>
+			<input type="text" name="nombre" placeholder="Nombre" pattern="[A-Za-zÑñáéíóúÁÉÍÓÚ\s]+" class="form-control">  <p></p>
+			<input type="number" name="existencias" placeholder="Nro de existencias" pattern="[0-9]{3}$" class="form-control"> <p></p>
+			<input type="number" name="precio" placeholder="Precio" pattern="^[0-9.,]+$" class="form-control"> <p></p>
 			<section class="section">
 				<select class="form-select" name="genero" class="select">
 					<option selected>Generos</option>
@@ -60,8 +60,8 @@
 					  }
 					  %>
 				</select>
-<%-- 					<a href="<%=url%>GenerosController?op=nuevo" class="btn btn-outline-dark">Nuevo genero</a> <p></p> --%>
-				</section>
+<%-- 			<a href="<%=url%>GenerosController?op=nuevo" class="btn btn-outline-dark">Nuevo genero</a> <p></p> --%>
+			</section>
 				<section class="section">
 					<select class="form-select" name="editorial" class="select"> 
 					  <option selected>Editoriales</option>
@@ -92,7 +92,7 @@
 					</select>
 <%-- 					<a href="<%=url%>AutoresController?op=nuevo" class="btn btn-outline-dark" >Nuevo autor</a>  <p></p> --%>
 				</section>
-				<input type="text" name="descripcion" id="descripcion" placeholder="Descripcion" class="form-control"> <p></p>
+				<input type="text" name="descripcion" id="descripcion" placeholder="Descripcion" pattern="[A-Za-zÑñáéíóúÁÉÍÓÚ\s]+" class="form-control"> <p></p>
 				<br>
 				<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
 				<a href="<%=url%>LibrosController?op=listar" class="btn btn-outline-primary"> Volver </a>

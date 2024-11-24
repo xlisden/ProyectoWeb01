@@ -61,8 +61,8 @@
 	<div class="form-group">
 		<form role="form" action="<%=url %>AutoresController" method="POST" onsubmit="return validar()">
 			<input type="hidden" name="op" value="insertar">
-			<input type="text" name="nombre" <%= (nombre == null) ? "placeholder='Nombre'" : "value='" + nombre + "'" %>  id="nombre" class="form-control" > <p></p>
-			<input type="text" name="nacionalidad" <%= (nacionalidad == null) ? "placeholder='Nacionalidad'" : "value='" + nacionalidad + "'" %>  id="nacionalidad" class="form-control"  > <p></p>
+			<input type="text" name="nombre" <%= (nombre == null) ? "placeholder='Nombre'" : "value='" + nombre + "'" %>  id="nombre" pattern="[A-Za-zÑñáéíóúÁÉÍÓÚ\s]+" class="form-control" > <p></p>
+			<input type="text" name="nacionalidad" <%= (nacionalidad == null) ? "placeholder='Nacionalidad'" : "value='" + nacionalidad + "'" %>  id="nacionalidad" pattern="[A-Za-zÑñáéíóúÁÉÍÓÚ\s]+" class="form-control"  > <p></p>
 			<br>
 			<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
 			<a href="<%=url%>AutoresController?op=listar" class="btn btn-outline-primary"> Volver </a>

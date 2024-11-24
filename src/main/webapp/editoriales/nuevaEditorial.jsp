@@ -42,9 +42,9 @@
 	<div class="form-group">
 	<form role="form" action="<%=url %>EditorialesController" method="POST">
 		<input type="hidden" name="op" value="insertar">
-		<input type="text" name="nombre" <%= (nombre == null) ? "placeholder='Nombre'" : "value='" + nombre + "'" %> class="form-control" > <p></p>
+		<input type="text" name="nombre" <%= (nombre == null) ? "placeholder='Nombre'" : "value='" + nombre + "'" %> pattern="[A-Za-zÑñáéíóúÁÉÍÓÚ\s]+" class="form-control" > <p></p>
 		<input type="email"  name="contacto" <%= (contacto == null) ? "placeholder='Contacto'" : "value='" + contacto + "'" %> class="form-control" > <p></p>
-		<input type="number" name="telefono" <%= (telefono == null) ? "placeholder='Telefono'" : "value='" + telefono + "'" %> class="form-control" > <p></p>
+		<input type="number" name="telefono" <%= (telefono == null) ? "placeholder='Telefono'" : "value='" + telefono + "'" %> pattern="[0-9]{9}$" class="form-control" > <p></p>
 		<br>
 		<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
 		<a href="<%=url%>EditorialesController?op=listar" class="btn btn-outline-primary"> Volver </a>

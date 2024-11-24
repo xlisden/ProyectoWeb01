@@ -33,9 +33,9 @@
 		<input type="hidden" name="op" value="modificar">
 		<input type="hidden" name="ideditorial" value="<%=editorial.getIdeditorial()%>" >
 		
-		<input type="text" name="nombre" id="nombre" value="<%=editorial.getNombre()%>" class="form-control" > <p></p>
+		<input type="text" name="nombre" id="nombre" value="<%=editorial.getNombre()%>" pattern="[A-Za-zÑñáéíóúÁÉÍÓÚ\s]+" class="form-control" > <p></p>
 		<input type="email" name="contacto" id="contacto" value="<%=editorial.getContacto()%>" class="form-control" > <p></p>
-		<input type="number" name="telefono" id="telefono" value="<%=editorial.getTelefono()%>" class="form-control" >  <p></p>
+		<input type="number" name="telefono" id="telefono" value="<%=editorial.getTelefono()%>" pattern="[0-9]{9}$" class="form-control" >  <p></p>
 		<br>
 		<input type="submit" value="Guardar" name="Guardar" class="btn btn-primary">
 		<a href="<%=url%>EditorialesController?op=listar" class="btn btn-outline-primary"> Volver </a>
